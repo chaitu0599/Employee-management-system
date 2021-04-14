@@ -4,6 +4,7 @@
 }
 
 <div class="container">
+    <center><h1>Login</h1></center>
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
@@ -17,7 +18,8 @@
                     <input asp-for="Upassword" class="form-control" type="password" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Login" />
+                    <input type="reset" value="Reset"/>
                 </div>
             </form>
         </div>
@@ -25,10 +27,20 @@
     </div>
 </div>
 @{       
+
     if (TempData["msg"] != null)
-            {
+    {
+        if (TempData["msg"].ToString() == "Yes") {
+    <script>
+        window.location.replace("Home/add")
+    </script>
+           }
+        if(TempData["msg"].ToString() == "No")
+        {
                 <script>
-                    alert('@TempData["msg"]')
+                    alert("Login failed")
                 </script>
-            }
-}
+        }
+        TempData["msg"] = null;
+    }
+    }

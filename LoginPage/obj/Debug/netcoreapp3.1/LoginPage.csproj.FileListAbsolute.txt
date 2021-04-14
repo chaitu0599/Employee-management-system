@@ -41,3 +41,12 @@ C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win-
 C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\add.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\form.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\Logout.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\viewr.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\RestSharp.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\EPPlus.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\Microsoft.Office.Interop.Excel.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll

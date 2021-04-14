@@ -9,6 +9,7 @@ namespace LoginPage.Models
     {
         public string Username { get; set; }
         public string Upassword { get; set; }
-
+        
     }
 }
+

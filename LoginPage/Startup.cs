@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Session;
 
 namespace LoginPage
 {
@@ -23,6 +24,11 @@ namespace LoginPage
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>{
+                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time   
+            });
+            services.AddMvc();
             services.AddControllersWithViews();
         }
 
@@ -41,8 +47,10 @@ namespace LoginPage
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
+            
 
             app.UseAuthorization();
 
