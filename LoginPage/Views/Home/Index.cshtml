@@ -2,7 +2,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<head>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+</head>
 <div class="container">
     <center><h1>Login</h1></center>
     <div class="row">
