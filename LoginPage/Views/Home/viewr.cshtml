@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Display Data";
-    string[] TableHeaders = new string[] {"Name",
+    string[] TableHeaders = new string[] {
+                    "Name",
                     "Date of Birth",
                     "Father's Name",
                     "Mother's Name",
@@ -75,6 +76,8 @@
                                 <td>@Data.fresher</td>
                                 <td>@Data.role</td>
                                 <td>@Data.notes</td>
+                                <td>@Html.ActionLink("Edit","Edit",new { id=Data.id})</td>
+                                <td>@Html.ActionLink("Delete","Delete",new { id=Data.id})</td>
                             </tr>
                         }
                     }

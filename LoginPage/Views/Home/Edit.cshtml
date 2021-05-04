@@ -1,0 +1,132 @@
+﻿@model LoginPage.Models.employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Details</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="add">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <center>
+        <h1>Edit</h1>
+        <h4>employee</h4>
+        </center>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="name" class="control-label">Name</label>
+                        <input asp-for="name" class="form-control" />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="dob" class="control-label">Date of Birth</label>
+                        <input type="date" asp-for="dob" class="form-control" required />
+                        <span asp-validation-for="dob" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="father" class="control-label">Father's Name</label>
+                        <input asp-for="father" class="form-control" />
+                        <span asp-validation-for="father" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="mother" class="control-label">Mother's Name</label>
+                        <input asp-for="mother" class="form-control" />
+                        <span asp-validation-for="mother" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="address" class="control-label">Address</label>
+                        <input asp-for="address" class="form-control" />
+                        <span asp-validation-for="address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="salary" class="control-label">Salary</label>
+                        <input type="number" asp-for="salary" class="form-control" />
+                        <span asp-validation-for="salary" class="text-danger"></span>
+                    </div>
+                    <div class="form-inline">
+                        <label asp-for="fresher" class="control-label p-3">Fresher</label>
+                        <input asp-for="fresher" id="Yes" class="form-control p-2" value="Yes" type="radio" />
+                        Yes
+                        <input asp-for="fresher" id="No" class="form-control p-2" value="No" type="radio" />
+                        No
+                        <span asp-validation-for="fresher" class="text-danger"></span>
+                    </div>
+                    <div class="form-inline">
+                        <label asp-for="role" class="control-label">Role</label>
+                        <select asp-for="role" class="form-control">
+                            <option value="Trainee">Trainee</option>
+                            <option value="AST">AST</option>
+                            <option value="System Engineer">System Engineer</option>
+                            <option value="IT Analyst">IT Analyst</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Lead">Lead</option>
+                        </select>
+                        <span asp-validation-for="role" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="notes" class="control-label">Notes</label>
+                        <input asp-for="notes" class="form-control" />
+                        <span asp-validation-for="notes" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                    <div class="form-group">
+                        <a asp-action="viewr">Back to List</a>
+                    </div>
+                </form>
+            </div>
+</div>
+    </div>
+</body>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@{
+    if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() == "Yes")
+        {
+            <script>
+                alert("Record updated")
+            </script>
+        }
+        if (TempData["msg"].ToString() == "No")
+        {
+            <script>
+                    alert("Record updation failed")
+            </script>
+        }
+    }
+}

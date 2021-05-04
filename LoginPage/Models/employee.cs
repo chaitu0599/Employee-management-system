@@ -7,6 +7,7 @@ namespace LoginPage.Models
 {
     public class employee
     {
+        public string id { get; set; }
         public string name { get; set; }
         public string dob { get; set; }
         public string father { get; set; }
