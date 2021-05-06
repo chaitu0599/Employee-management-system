@@ -41,8 +41,12 @@ namespace LoginPage.Controllers
             return View();
         }
        
+        public IActionResult Adlogin()
+        {
+            return View();
+        }
         [HttpPost]
-        public IActionResult Index([Bind] Ad_login ad)
+        public IActionResult Adlogin([Bind] Ad_login ad)
         {
             int res = dbop.LoginCheck(ad);
             if (res == 1)
@@ -56,10 +60,9 @@ namespace LoginPage.Controllers
             {
                 TempData["msg"] = "No";
             }
-            
+
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
@@ -124,7 +127,7 @@ namespace LoginPage.Controllers
             parameter.Value = id;
             parameter.ParameterName = "@id";
             com.Parameters.Add(parameter);
-            com.CommandText = "DELETE FROM employees WHERE id=@id";
+            com.CommandText = "UPDATE employees SET isactive='0' WHERE id=@id";
             com.ExecuteNonQuery();
             con.Close();
             return RedirectToAction("viewr");
@@ -184,7 +187,7 @@ namespace LoginPage.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                com.CommandText = "SELECT TOP (1000) [id],[name],[dob],[father],[mother],[address],[salary],[fresher],[role],[notes] FROM [Login].[dbo].[employees]";
+                com.CommandText = "SELECT TOP (1000) [id],[name],[dob],[father],[mother],[address],[salary],[fresher],[role],[notes] FROM [Login].[dbo].[employees] WHERE [isactive]='1'";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {

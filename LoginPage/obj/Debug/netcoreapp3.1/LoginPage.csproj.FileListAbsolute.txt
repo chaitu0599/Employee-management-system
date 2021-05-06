@@ -123,3 +123,7 @@ C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\tr\Microsoft.
 C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\Adlogin.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Emplogin.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\empop.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\newe.cshtml.g.cs

@@ -1,52 +1,15 @@
-﻿@model LoginPage.Models.Ad_login
-@{
-    ViewData["Title"] = "Home Page";
-}
-<head>
-    <script type="text/javascript">
-        function preventBack() { window.history.forward(); }
-        setTimeout("preventBack()", 0);
-        window.onunload = function () { null };
-    </script>
-</head>
+﻿<script type="text/javascript">
+    function ad() {
+        location.href = "Home/Adlogin";
+    }
+    function emp() {
+        location.href = "Employee/Emplogin";
+    }
+</script>
 <div class="container">
-    <center><h1>Login</h1></center>
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form class="form-horizontal" asp-action="Index">
-                <div class="form-group">
-                    <label class="control-label">Username</label>
-                    <input asp-for="Username" class="form-control" type="text" required/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input asp-for="Upassword" class="form-control" type="password" required />
-                </div>
-                <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Login" />
-                    <input class="btn btn-primary" type="reset" value="Reset"/>
-                </div>
-            </form>
-        </div>
-        <div class="col-sm-4"></div>
-    </div>
+    <center><h1>Welcome! Who are you?</h1><br><h2>Select from below</h2></center><br>
+    <center>
+        <button type="button" class="btn btn-primary m-4" onclick="ad()">Admin</button>
+        <button type="button" class="btn btn-info" onclick="emp()">Employee</button>
+    </center>
 </div>
-@{       
-
-    if (TempData["msg"] != null)
-    {
-        if (TempData["msg"].ToString() == "Yes") {
-    <script>
-        window.location.replace("Home/add")
-    </script>
-           }
-        if(TempData["msg"].ToString() == "No")
-        {
-                <script>
-                    alert("Login failed")
-                </script>
-        }
-        TempData["msg"] = null;
-    }
-    }

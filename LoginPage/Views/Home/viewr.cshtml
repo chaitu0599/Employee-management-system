@@ -12,6 +12,22 @@
                     "Notes"};
     
 }
+<head>
+    <script lang="javascript">
+        function del(p) {
+            var a = window.prompt("Do you really want to delete?Press YES to confirm.");
+            if (a == "YES") {
+                window.location.href = "Delete\\" + p;
+            }
+            else {
+                window.location.href = "viewr";
+            }
+        }
+        function edit(p) {
+            window.location.href = "Edit\\" + p;
+        }
+    </script>
+</head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -76,8 +92,8 @@
                                 <td>@Data.fresher</td>
                                 <td>@Data.role</td>
                                 <td>@Data.notes</td>
-                                <td>@Html.ActionLink("Edit","Edit",new { id=Data.id})</td>
-                                <td>@Html.ActionLink("Delete","Delete",new { id=Data.id})</td>
+                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
+                                <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
                             </tr>
                         }
                     }

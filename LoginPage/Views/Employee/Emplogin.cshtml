@@ -1,0 +1,59 @@
+﻿@model LoginPage.Models.Emp_login
+@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+        function newe() {
+            location.href = "newe";
+        }
+    </script>
+</head>
+<div class="container">
+    <center><h1>Employee Login</h1></center>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <form class="form-horizontal" asp-action="Emplogin">
+                <div class="form-group">
+                    <label class="control-label">Username</label>
+                    <input asp-for="Username" class="form-control" type="text" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Password</label>
+                    <input asp-for="Upassword" class="form-control" type="password" required />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <input class="btn btn-primary" type="reset" value="Reset" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-secondary" onclick="newe()">New Employee</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+@{
+
+    if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() == "Yes")
+        {
+            <script>
+        window.location.replace("empop")
+            </script>
+        }
+        if (TempData["msg"].ToString() == "No")
+        {
+            <script>
+                    alert("Login failed")
+            </script>
+        }
+        TempData["msg"] = null;
+    }
+}
