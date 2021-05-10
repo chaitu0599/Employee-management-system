@@ -1,0 +1,151 @@
+﻿@model LoginPage.Models.Tasks
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<center><h1>Edit</h1>
+
+<h4>Tasks</h4>
+<hr /></center>
+<div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Taskname" class="control-label"></label>
+                <input asp-for="Taskname" class="form-control" required />
+                <span asp-validation-for="Taskname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Startdate" class="control-label"></label>
+                <input asp-for="Startdate" class="form-control" type="date" required />
+                <span asp-validation-for="Startdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enddate" class="control-label"></label>
+                <input asp-for="Enddate" class="form-control" type="date" required />
+                <span asp-validation-for="Enddate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Teamname" class="control-label"></label>
+                <input asp-for="Teamname" class="form-control" required />
+                <span asp-validation-for="Teamname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Summary" class="control-label"></label>
+                <input asp-for="Summary" class="form-control" required />
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Taskdetails" class="control-label"></label>
+                <input asp-for="Taskdetails" class="form-control" required />
+                <span asp-validation-for="Taskdetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Select1">Any issues/risks?</label>
+                <select class="form-control" id="Select1">
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="rdl" asp-for="Riskdetails" class="control-label"></label>
+                <input id="rd" asp-for="Riskdetails" class="form-control" />
+                <span asp-validation-for="Riskdetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label id="rsl" asp-for="Risksolution" class="control-label"></label>
+                <input id="rs" asp-for="Risksolution" class="form-control" />
+                <span asp-validation-for="Risksolution" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <a asp-action="Viewtask">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+
+    $("#Select1").change(function () {
+        if ($(this).val() == "Yes") {
+            $('#rd').show();
+            $('#rd').attr('required', '');
+            $('#rd').attr('data-error', 'This field is required.');
+            $('#rdl').show();
+            $('#rsl').show();
+            $('#rs').show();
+            $('#rs').attr('required', '');
+            $('#rs').attr('data-error', 'This field is required.');
+
+        } else {
+            $('#rd').hide();
+            $('#rd').removeAttr('required');
+            $('#rd').removeAttr('data-error');
+            $('#rsl').hide();
+            $('#rdl').hide();
+            $('#rs').hide();
+            $('#rs').removeAttr('required');
+            $('#rs').removeAttr('data-error');
+        }
+    });
+    $("#Select1").trigger("change");
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@{
+    if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() == "Yes")
+        {
+            <script>
+                alert("Task updated")
+            </script>
+        }
+        if (TempData["msg"].ToString() == "No")
+        {
+            <script>
+                alert("Task updation failed")
+            </script>
+        }
+    }
+}

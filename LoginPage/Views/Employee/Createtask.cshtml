@@ -1,0 +1,130 @@
+﻿@model LoginPage.Models.Taskadd
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <center><h1>Enter Task Details</h1></center>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form class="form-vertical" asp-action="Createtask">
+                    <div class="form-group">
+                        <label class="control-label">Task Name</label>
+                        <input asp-for="Taskname" class="form-control" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Start Date</label>
+                        <input asp-for="Startdate" class="form-control" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">End Date</label>
+                        <input asp-for="Enddate" class="form-control" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Team Name</label>
+                        <input asp-for="Teamname" class="form-control" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Task Summary</label>
+                        <input asp-for="Summary" class="form-control" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Task Details</label>
+                        <input asp-for="Taskdetails" class="form-control" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Select1">Any issues/risks?</label>
+                        <select class="form-control" id="Select1">
+                            <option value="No" selected>No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rd" class="control-label" id="rdl">Risk/issue details</label>
+                        <input id="rd" class="form-control" asp-for="Riskdetails" type="text" />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="rs" class="control-label" id="rsl">Risk Solution</label>
+                        <textarea id="rs" asp-for="Risksolution"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info" type="submit" value="Submit" />
+                        <input class="btn btn-outline-secondary" type="reset" value="Reset" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+
+        $("#Select1").change(function () {
+            if ($(this).val() == "Yes") {
+                $('#rd').show();
+                $('#rd').attr('required', '');
+                $('#rd').attr('data-error', 'This field is required.');
+                $('#rdl').show();
+                $('#rsl').show();
+                $('#rs').show();
+                $('#rs').attr('required', '');
+                $('#rs').attr('data-error', 'This field is required.');
+
+            } else {
+                $('#rd').hide();
+                $('#rd').removeAttr('required');
+                $('#rd').removeAttr('data-error');
+                $('#rsl').hide();
+                $('#rdl').hide();
+                $('#rs').hide();
+                $('#rs').removeAttr('required');
+                $('#rs').removeAttr('data-error');
+            }
+        });
+        $("#Select1").trigger("change");
+    </script>
+</body>
+@{
+    if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() == "Yes")
+        {
+            <script>
+                alert("Task added")
+            </script>
+        }
+        if (TempData["msg"].ToString() == "No")
+        {
+            <script>
+                alert("Task addition failed")
+            </script>
+        }
+    }
+}

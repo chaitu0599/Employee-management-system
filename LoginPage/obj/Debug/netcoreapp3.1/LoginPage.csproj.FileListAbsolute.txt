@@ -127,3 +127,7 @@ C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\H
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Emplogin.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\empop.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\newe.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Viewtask.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Createtask.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Edit.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Details.cshtml.g.cs

@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Display Data";
+    string[] TableHeaders = new string[] {
+                    "Task Name",
+                    "Start Date",
+                    "End Date",
+                    "Task Duration",
+                    "Team Name",
+                    "Task Summary",
+                    "Task Details",
+                    "Risk Details",
+                    "Risk Solution" };
+}
+<head>
+    <script lang="javascript">
+        function view(p) {
+            location.href = "Details/" + p;
+        }
+        function edit(p) {
+            location.href = "Edit/" + p;
+        }
+        function del(p) {
+            var x = window.prompt("Do you really want to delete?Press YES to confirm.");
+            if (x == "YES") {
+                location.href = "Delete/" + p;
+            }
+            else {
+                location.href = "Viewtask";
+            }
+        }
+        function create() {
+            location.href = "Createtask";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="table">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @{
+                        foreach (var head in TableHeaders)
+                        {
+                            <th>
+                                @head
+                            </th>
+                        }
+
+
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var Data in Model)
+                        {
+                            <tr>
+                                <td>@Data.Taskname</td>
+                                <td>@Data.Startdate</td>
+                                <td>@Data.Enddate</td>
+                                <td>@Data.Duration</td>
+                                <td>@Data.Teamname</td>
+                                <td>@Data.Summary</td>
+                                <td>@Data.Taskdetails</td>
+                                <td>@Data.Riskdetails</td>
+                                <td>@Data.Risksolution</td>
+                                <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
+                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
+                                <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <center>
+        <button class="btn btn-info" onclick="create()">Create New Task</button>
+        </center>
+    </div>
+</body>

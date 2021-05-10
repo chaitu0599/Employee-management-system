@@ -35,6 +35,7 @@ namespace LoginPage.Models
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@Username", emp.Username);
             com.Parameters.AddWithValue("@Upassword", emp.Upassword);
+            com.Parameters.AddWithValue("@Empid", emp.empid);
             SqlParameter oblogin = new SqlParameter();
             oblogin.ParameterName = "@Isvalid";
             oblogin.SqlDbType = SqlDbType.Bit;
@@ -64,6 +65,7 @@ namespace LoginPage.Models
             {
                 SqlCommand com1 = new SqlCommand("SP_emplogin", con);
                 com1.CommandType = CommandType.StoredProcedure;
+                com1.Parameters.AddWithValue("@Empid", n.id);
                 com1.Parameters.AddWithValue("@Username", n.Username);
                 com1.Parameters.AddWithValue("@Password", n.Password);
                 con.Open();
@@ -71,6 +73,120 @@ namespace LoginPage.Models
                 con.Close();
             }
             return res;
+        }
+        public int taskadd(Taskadd ta,string empid)
+        {
+            SqlCommand com = new SqlCommand("SP_taskinsert", con);
+            int id = Int32.Parse(empid);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Empid", id);
+            com.Parameters.AddWithValue("@Taskname", ta.Taskname);
+            com.Parameters.AddWithValue("@Startdate", ta.Startdate);
+            com.Parameters.AddWithValue("@Enddate", ta.Enddate);
+            DateTime firstDay = ta.Startdate;
+            firstDay = firstDay.Date;
+            DateTime lastDay = ta.Enddate;
+            lastDay = lastDay.Date;
+            if (firstDay > lastDay)
+                throw new ArgumentException("Incorrect End date " + lastDay);
+
+            TimeSpan span = lastDay - firstDay;
+            int businessDays = span.Days + 1;
+            int fullWeekCount = businessDays / 7;
+           
+            if (businessDays > fullWeekCount * 7)
+            {
+                int firstDayOfWeek = (int)firstDay.DayOfWeek;
+                int lastDayOfWeek = (int)lastDay.DayOfWeek;
+                if (lastDayOfWeek < firstDayOfWeek)
+                    lastDayOfWeek += 7;
+                if (firstDayOfWeek <= 6)
+                {
+                    if (lastDayOfWeek >= 7)
+                        businessDays -= 2;
+                    else if (lastDayOfWeek >= 6)
+                        businessDays -= 1;
+                }
+                else if (firstDayOfWeek <= 7 && lastDayOfWeek >= 7)
+                    businessDays -= 1;
+            }
+            businessDays -= fullWeekCount + fullWeekCount;
+            com.Parameters.AddWithValue("@Duration", businessDays);
+            com.Parameters.AddWithValue("@Teamname", ta.Teamname);
+            com.Parameters.AddWithValue("@Summary", ta.Summary);
+            com.Parameters.AddWithValue("@Taskdetails", ta.Taskdetails);
+            if (ta.Riskdetails == null)
+            {
+                com.Parameters.AddWithValue("@Riskdetails", "No issues/risks");
+                com.Parameters.AddWithValue("@Risksolution", "No issues/risks");
+            }
+            else
+            {
+                com.Parameters.AddWithValue("@Riskdetails", ta.Riskdetails);
+                com.Parameters.AddWithValue("@Risksolution", ta.Risksolution);
+            }
+            con.Open();
+            com.ExecuteNonQuery();
+            int x = 1;
+            con.Close();
+            return x;
+        }
+        public int taskadd(Taskadd ta,int id)
+        {
+            SqlCommand com = new SqlCommand("SP_taskupdate", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@Taskname", ta.Taskname);
+            com.Parameters.AddWithValue("@Startdate", ta.Startdate);
+            com.Parameters.AddWithValue("@Enddate", ta.Enddate);
+            DateTime firstDay = ta.Startdate;
+            firstDay = firstDay.Date;
+            DateTime lastDay = ta.Enddate;
+            lastDay = lastDay.Date;
+            if (firstDay > lastDay)
+                throw new ArgumentException("Incorrect End date " + lastDay);
+
+            TimeSpan span = lastDay - firstDay;
+            int businessDays = span.Days + 1;
+            int fullWeekCount = businessDays / 7;
+
+            if (businessDays > fullWeekCount * 7)
+            {
+                int firstDayOfWeek = (int)firstDay.DayOfWeek;
+                int lastDayOfWeek = (int)lastDay.DayOfWeek;
+                if (lastDayOfWeek < firstDayOfWeek)
+                    lastDayOfWeek += 7;
+                if (firstDayOfWeek <= 6)
+                {
+                    if (lastDayOfWeek >= 7)
+                        businessDays -= 2;
+                    else if (lastDayOfWeek >= 6)
+                        businessDays -= 1;
+                }
+                else if (firstDayOfWeek <= 7 && lastDayOfWeek >= 7)
+                    businessDays -= 1;
+            }
+            businessDays -= fullWeekCount + fullWeekCount;
+            com.Parameters.AddWithValue("@Duration", businessDays);
+            com.Parameters.AddWithValue("@Teamname", ta.Teamname);
+            com.Parameters.AddWithValue("@Summary", ta.Summary);
+            com.Parameters.AddWithValue("@Taskdetails", ta.Taskdetails);
+            if (ta.Riskdetails == null)
+            {
+                com.Parameters.AddWithValue("@Riskdetails", "No issues/risks");
+                com.Parameters.AddWithValue("@Risksolution", "No issues/risks");
+            }
+            else
+            {
+                com.Parameters.AddWithValue("@Riskdetails", ta.Riskdetails);
+                com.Parameters.AddWithValue("@Risksolution", ta.Risksolution);
+            }
+            con.Open();
+            com.ExecuteNonQuery();
+            int x = 1;
+            con.Close();
+            return x;
+
         }
     }
 }
