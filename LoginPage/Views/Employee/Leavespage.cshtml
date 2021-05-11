@@ -6,7 +6,6 @@
                     "End Date",
                     "Leave Type",
                     "Reason",
-                    "Task Summary",
                     "Doc",
                     "Status"
                     };
@@ -14,22 +13,24 @@
 <head>
     <script lang="javascript">
         function view(p) {
-            location.href = "Leavedetails/" + p;
+            location.href = "LeaveDetails/" + p;
         }
         function edit(p) {
-            location.href = "LeaveEdit/" + p;
+            location.href = "EditLeaves/" + p;
         }
         function del(p) {
             var x = window.prompt("Do you really want to delete?Press YES to confirm.");
-            if (x == "YES") {
-                location.href = "Delete/" + p;
-            }
-            else {
-                location.href = "Viewtask";
-            }
+            if(x=="YES")
+                location.href = "DeleteLeave/" + p;
+            else
+                location.href = "Leavespage" + p;
         }
         function create() {
-            location.href = "Createtask";
+            location.href = "Leaveapplication";
+        }
+        function down(p) {
+      
+                location.href = "Download/" + p;
         }
     </script>
 </head>
@@ -92,7 +93,7 @@
                                 <td>@Data.Enddate</td>
                                 <td>@Data.Leavetype</td>
                                 <td>@Data.Reason</td>
-                                <td>@Data.Doc</td>
+                                <td><button class="btn btn-outline-primary" onclick="down(@Data.id)">Download</button></td>
                                 <td>@Data.Status</td>
                                 <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
                                 <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
@@ -104,7 +105,7 @@
             </tbody>
         </table>
         <center>
-            <button class="btn btn-info" onclick="create()">Create New Task</button>
+            <button class="btn btn-info" onclick="create()">Apply for a Leave</button>
         </center>
     </div>
 </body>

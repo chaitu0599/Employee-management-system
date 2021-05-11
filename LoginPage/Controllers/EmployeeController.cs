@@ -24,6 +24,8 @@ namespace LoginPage.Controllers
         SqlCommand com = new SqlCommand();
         SqlDataReader dr;
         SqlConnection con = new SqlConnection();
+        List<Fetchleaves> leaves = new List<Fetchleaves>();
+        Fetchleaves fl = new Fetchleaves();
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ILogger<EmployeeController> _logger;
         public EmployeeController(ILogger<EmployeeController> logger, IWebHostEnvironment env)
@@ -137,6 +139,11 @@ namespace LoginPage.Controllers
         {
             FetchData();
             return View(tasks);
+        }
+        public IActionResult Leavespage()
+        {
+            FetchLeaves();
+            return View(leaves);
         }
         public IActionResult Delete(int id)
         {
@@ -263,6 +270,203 @@ namespace LoginPage.Controllers
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+        public IActionResult EditLeaves(int id)
+        {
+            FetchLeaves(id);
+            return View(fl);
+        }
+        [HttpPost]
+        public IActionResult EditLeaves([Bind] Leaveapp la,int id)
+        {
+            string folder = "No";
+            if (la.Doc != null)
+            {
+                folder = "documents/";
+                folder += Guid.NewGuid().ToString() + la.Doc.FileName;
+                string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+                la.Doc.CopyToAsync(new FileStream(ServerFolder, FileMode.Create));
+            }
+            int x = dbop.editleaves(la, id,folder);
+            if (x == 1)
+                TempData["msg"] = "Yes";
+            else
+                TempData["msg"] = "No";
+            return View();
+        }
+        public IActionResult LeaveDetails(int id)
+        {
+            FetchLeaves(id);
+            return View(fl);
+        }
+        public IActionResult DeleteLeave(int id)
+        {
+            con.Open();
+            com.Connection = con;
+            var parameter = com.CreateParameter();
+            parameter.Value = id;
+            parameter.ParameterName = "@id";
+            com.Parameters.Add(parameter);
+            com.CommandText = "UPDATE Leaves1 SET Isactive='0' WHERE id=@id";
+            com.ExecuteNonQuery();
+            con.Close();
+            return RedirectToAction("Leavespage");
+
+        }
+        public IActionResult Download(int id)
+        {
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                var par1 = com.CreateParameter();
+                par1.Value = id;
+                par1.ParameterName = "@id";
+                com.Parameters.Add(par1);
+                com.CommandText = "SELECT [Doc] FROM [Login].[dbo].[Leaves1] WHERE id=@id";
+                dr = com.ExecuteReader();
+                
+                    var path = Path.Combine(
+                           Directory.GetCurrentDirectory(),
+                           "wwwroot", dr["Doc"].ToString());
+                    var memory = new MemoryStream();
+                    using (var stream = new FileStream(path, FileMode.Open))
+                    {
+                        stream.CopyToAsync(memory);
+                    }
+                    memory.Position = 0;
+                con.Close();
+                return File(memory, GetContentType(path), Path.GetFileName(path));
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types[ext];
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},  
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
+        }
+        private void FetchLeaves(int id)
+        {
+            //string ServerFolder;
+            try
+            {
+                con.Open();
+                com.Connection = con;
+
+                var parameter = com.CreateParameter();
+                parameter.Value = id;
+                parameter.ParameterName = "@id";
+                com.Parameters.Add(parameter);
+
+                com.CommandText = "Select [id], [StartDate],[Enddate],[Leavetype],[Reason],[Doc],[Status] from Leaves1 where id = @id";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                   // ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, dr["Doc"].ToString());
+                    //using (var stream = System.IO.File.OpenRead(ServerFolder))
+                    {
+                        fl = new Fetchleaves()
+                        {
+                            id=Int32.Parse(dr["id"].ToString()),
+
+                            Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
+                    ,
+                            Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
+                    ,
+                            Leavetype = dr["Leavetype"].ToString()
+                    ,
+                            Doc = dr["Doc"].ToString()
+                            ,
+                            Status=dr["Status"].ToString(),
+                    
+                            Reason = dr["Reason"].ToString()
+                        };
+                    }
+                }
+               // ServerFolder = null;
+                con.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void FetchLeaves()
+        {
+            //string ServerFolder;
+            if (leaves.Count > 0)
+            {
+                leaves.Clear();
+            }
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                var parameter = com.CreateParameter();
+                parameter.Value = Int32.Parse(HttpContext.Session.GetString("empid"));
+                parameter.ParameterName = "@empid";
+                com.Parameters.Add(parameter);
+                com.CommandText = "SELECT TOP (1000) [id],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status] FROM [Login].[dbo].[Leaves1] WHERE [isactive]='1' AND empid=@empid";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                        //ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, dr["Doc"].ToString());
+
+                        //using (var stream = System.IO.File.OpenRead(ServerFolder))
+                        {
+
+                            leaves.Add(new Fetchleaves()
+                            {
+                                id = Int32.Parse(dr["id"].ToString())
+                            ,
+                                Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
+                            ,
+                                Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
+                            ,
+                                Leavetype = dr["Leavetype"].ToString()
+                            ,
+                                Status = dr["Status"].ToString()
+                            ,
+                                Doc = dr["Doc"].ToString()
+                            ,
+                                Reason = dr["Reason"].ToString()
+                            });
+                        }
+                    }
+                
+                con.Close();
+
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
