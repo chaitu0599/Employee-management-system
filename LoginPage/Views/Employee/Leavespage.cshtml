@@ -1,23 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Display Data";
     string[] TableHeaders = new string[] {
-                    "Task Name",
+                    "Reference number",
                     "Start Date",
                     "End Date",
-                    "Task Duration",
-                    "Team Name",
+                    "Leave Type",
+                    "Reason",
                     "Task Summary",
-                    "Task Details",
-                    "Risk Details",
-                    "Risk Solution" };
+                    "Doc",
+                    "Status"
+                    };
 }
 <head>
     <script lang="javascript">
         function view(p) {
-            location.href = "Details/" + p;
+            location.href = "Leavedetails/" + p;
         }
         function edit(p) {
-            location.href = "Edit/" + p;
+            location.href = "LeaveEdit/" + p;
         }
         function del(p) {
             var x = window.prompt("Do you really want to delete?Press YES to confirm.");
@@ -87,15 +87,13 @@
                         foreach (var Data in Model)
                         {
                             <tr>
-                                <td>@Data.Taskname</td>
+                                <td>@Data.id</td>
                                 <td>@Data.Startdate</td>
                                 <td>@Data.Enddate</td>
-                                <td>@Data.Duration</td>
-                                <td>@Data.Teamname</td>
-                                <td>@Data.Summary</td>
-                                <td>@Data.Taskdetails</td>
-                                <td>@Data.Riskdetails</td>
-                                <td>@Data.Risksolution</td>
+                                <td>@Data.Leavetype</td>
+                                <td>@Data.Reason</td>
+                                <td>@Data.Doc</td>
+                                <td>@Data.Status</td>
                                 <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
                                 <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
                                 <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
@@ -106,7 +104,7 @@
             </tbody>
         </table>
         <center>
-        <button class="btn btn-info" onclick="create()">Create New Task</button>
+            <button class="btn btn-info" onclick="create()">Create New Task</button>
         </center>
     </div>
 </body>

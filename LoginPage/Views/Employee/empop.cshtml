@@ -1,10 +1,10 @@
 ﻿@model LoginPage.Models.Emp_login
 <script type="text/javascript">
-    function addr() {
+    function viewr() {
         location.href = "Viewtask";
     }
-    function viewr() {
-        location.href = "#";
+    function leave() {
+        location.href = "Leavespage";
     }
 </script>
 <header>
@@ -38,7 +38,7 @@
 <div class="container">
     <center><h1>Welcome! @Model.Username</h1><br><h2>Select the operation you want to perform</h2></center><br>
     <center>
-        <button type="button" class="btn btn-primary" onclick="addr()">View Tasks</button>
-        <button type="button" class="btn btn-info" onclick="viewr()">Leave Application</button>
+        <button type="button" class="btn btn-primary" onclick="viewr()">View Tasks</button>
+        <button type="button" class="btn btn-info" onclick="leave()">My Leaves</button>
     </center>
 </div>

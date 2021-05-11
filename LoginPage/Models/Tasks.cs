@@ -8,6 +8,7 @@ namespace LoginPage.Models
     public class Tasks
     {
         public string id { get; set; }
+        public string Empid { get; set; }
         public string Taskname { get; set; }
         public string Startdate { get; set; }
         public string Enddate { get; set; }

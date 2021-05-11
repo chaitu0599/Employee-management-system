@@ -131,3 +131,5 @@ C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\E
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Createtask.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Edit.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Details.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\ViewTasks.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Leaveapplication.cshtml.g.cs

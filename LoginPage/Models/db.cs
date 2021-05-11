@@ -188,5 +188,21 @@ namespace LoginPage.Models
             return x;
 
         }
+        public int leaveapp(Leaveapp la, string f,string empid)
+        {
+            SqlCommand com = new SqlCommand("SP_leaveinsert", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@empid", Int32.Parse(empid));
+            com.Parameters.AddWithValue("@Startdate", la.Startdate);
+            com.Parameters.AddWithValue("@Enddate",la.Enddate);
+            com.Parameters.AddWithValue("@Leavetype", la.Leavetype);
+            com.Parameters.AddWithValue("@Doc",f);
+            com.Parameters.AddWithValue("@Reason", la.Reason);
+            con.Open();
+            com.ExecuteNonQuery();
+            int x = 1;
+            con.Close();
+            return(x);
+        }
     }
 }

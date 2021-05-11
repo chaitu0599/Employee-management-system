@@ -25,6 +25,7 @@ namespace LoginPage.Controllers
         SqlConnection con = new SqlConnection();
         employee emp = new employee();
         List<employee> employees = new List<employee>();
+        List<Tasks> tasks = new List<Tasks>();
         getdb gtop = new getdb();
         private readonly ILogger<HomeController> _logger;
 
@@ -241,6 +242,70 @@ namespace LoginPage.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Export()
+        {
+            DataSet ds = gtop.Gettasks();
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var worksheet = package.Workbook.Worksheets.Add("sheet1");
+                worksheet.Cells.LoadFromDataTable(ds.Tables[0], true);
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelname = $"EmployeeTaskList.xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelname);
+        }
+        public IActionResult ViewTasks()
+        {
+            if (tasks.Count > 0)
+            {
+                tasks.Clear();
+            }
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                
+                com.CommandText = "SELECT TOP (1000) [id],[empid],[Taskname],[Startdate],[Enddate],[Taskduration],[Teamname],[summary],[Taskdetails],[Riskdetails],[Risksolution] FROM [Login].[dbo].[Task1] WHERE [isactive]='1'";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    tasks.Add(new Tasks()
+                    {
+                        id = dr["id"].ToString()
+                    ,
+                        Empid=dr["empid"].ToString()
+                    ,
+                        Taskname = dr["Taskname"].ToString()
+                    ,
+                        Startdate = dr["Startdate"].ToString()
+                    ,
+                        Enddate = dr["Enddate"].ToString()
+                    ,
+                        Duration = dr["Taskduration"].ToString()
+                    ,
+                        Teamname = dr["Teamname"].ToString()
+                    ,
+                        Taskdetails = dr["Taskdetails"].ToString()
+                    ,
+                        Summary = dr["summary"].ToString()
+                    ,
+                        Riskdetails = dr["Riskdetails"].ToString()
+                    ,
+                        Risksolution = dr["Risksolution"].ToString(),
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View(tasks);
         }
     }
 }

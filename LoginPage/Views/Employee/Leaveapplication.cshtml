@@ -1,0 +1,88 @@
+﻿@model LoginPage.Models.Leaveapp
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <center><h1>Leave Application</h1></center>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form class="form-vertical" method="post" enctype="multipart/form-data" asp-action="Leaveapplication">
+                    <div class="form-group">
+                        <label class="control-label">Start Date</label>
+                        <input asp-for="Startdate" class="form-control" type="date" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">End Date</label>
+                        <input asp-for="Enddate" class="form-control" type="date" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Select1">Leave Type</label>
+                        <select asp-for="Leavetype" class="form-control" id="Select1" required>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Casual Leave">Casual Leave</option>
+                            <option value="Earned Leave">Earned Leave</option>
+                            <option value="Flexi Leave">Flexi Leave</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Reason</label>
+                        <input asp-for="Reason" class="form-control" type="text" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Upload a Document</label>
+                        <input asp-for="Doc" class="form-control-file" type="file" />
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info" type="submit" value="Submit" />
+                        <input class="btn btn-outline-secondary" type="reset" value="Reset" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</body>
+@{
+    if (TempData["msg"] != null)
+    {
+        if (TempData["msg"].ToString() == "Yes")
+        {
+            <script>
+                alert("Leave applied")
+            </script>
+        }
+        if (TempData["msg"].ToString() == "No")
+        {
+            <script>
+                alert("Leave application failed")
+            </script>
+        }
+    }
+}

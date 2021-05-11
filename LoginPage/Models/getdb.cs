@@ -33,6 +33,27 @@ namespace LoginPage.Models
             da.Fill(ds);
             return ds;
         }
+        public DataSet Getrecord(string id)
+        {
+            int x = Int32.Parse(id);
+            SqlCommand com = new SqlCommand("SP_gettask", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@id", x);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
+        public DataSet Gettasks()
+        {
+            SqlCommand com = new SqlCommand("SP_gettask", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@verify",1);
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
     }
     
 }
