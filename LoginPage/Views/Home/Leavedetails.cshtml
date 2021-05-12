@@ -1,0 +1,79 @@
+﻿@model LoginPage.Models.Fetchleaves
+
+@{
+    ViewData["Title"] = "Leavedetails";
+}
+
+<h1>Leave Details</h1>
+<script lang="=javascript">
+    function approve(p) {
+        location.href = "../Approve/" + p;
+    }
+    function reject(p) {
+        var x = window.prompt("Do you really want to reject the leave? Type YES to confirm");
+        if (x == "YES")
+            location.href = "../Reject/" + p;
+        else
+            location.href = "Viewleaves";
+    }
+</script>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Reference Number
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt class = "col-sm-2">
+            Employee Id
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.empid)
+        </dd>
+        <dt class = "col-sm-2">
+            Start Date
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Startdate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Enddate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Enddate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Leavetype)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Leavetype)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Reason)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Reason)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Doc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Doc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if(Convert.ToBoolean(Model.verify)) {
+    <button class="btn btn-outline-success" onclick="approve(@Model.id)">Approve</button>
+    <button class="btn btn-outline-danger" onclick="reject(@Model.id)">Reject</button>
+    <a asp-action="Viewleaves">Back to List</a>
+    }
+</div>

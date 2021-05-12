@@ -13,6 +13,7 @@ using RestSharp;
 using System.Data;
 using System.IO;
 using OfficeOpenXml;
+using Microsoft.AspNetCore.Hosting;
 
 namespace LoginPage.Controllers
 {
@@ -27,14 +28,17 @@ namespace LoginPage.Controllers
         List<employee> employees = new List<employee>();
         List<Tasks> tasks = new List<Tasks>();
         getdb gtop = new getdb();
+        List<Fetchleaves> fl = new List<Fetchleaves>();
+        Fetchleaves l = new Fetchleaves();
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IWebHostEnvironment env)
         {
             _logger = logger;
             con.ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True";
+            _webHostEnvironment = env;
         }
         
         public IActionResult Index()
@@ -306,6 +310,129 @@ namespace LoginPage.Controllers
                 throw;
             }
             return View(tasks);
+        }
+        public IActionResult Viewleaves()
+        {
+            if (fl.Count > 0)
+            {
+                fl.Clear();
+            }
+            try
+            {
+                con.Open();
+                com.Connection = con;
+
+                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1'";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    fl.Add(new Fetchleaves()
+                    {
+                        id = Int32.Parse(dr["id"].ToString())
+                    ,
+                        empid = Int32.Parse(dr["empid"].ToString())
+                    ,
+                        Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
+                    ,
+                        Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
+                    ,
+                        Reason = dr["Reason"].ToString()
+                    ,
+                        Leavetype = dr["Leavetype"].ToString()
+                    ,
+                        Doc = dr["Doc"].ToString()
+                    ,
+                        Status = dr["Status"].ToString()
+                    });
+                }
+                con.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View(fl);
+            
+        }
+        public IActionResult Leavedetails(int id)
+        {
+            try
+            {
+                con.Open();
+                com.Connection = con;
+
+                var parameter = com.CreateParameter();
+                parameter.Value = id;
+                parameter.ParameterName = "@id";
+                com.Parameters.Add(parameter);
+                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[verify] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1' AND id=@id";
+                dr = com.ExecuteReader();
+                while (dr.Read())
+                {
+                    l=new Fetchleaves()
+                    {
+                        id = Int32.Parse(dr["id"].ToString())
+                    ,
+                        empid = Int32.Parse(dr["empid"].ToString())
+                    ,
+                        Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
+                    ,
+                        Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
+                    ,
+                        Reason = dr["Reason"].ToString()
+                    ,
+                        Leavetype = dr["Leavetype"].ToString()
+                    ,
+                        Doc = dr["Doc"].ToString()
+                    ,
+                        Status = dr["Status"].ToString()
+                    ,
+                        verify = Int32.Parse(dr["verify"].ToString())
+                    };
+
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+                return View(l);
+        }
+        public IActionResult Approve(int id)
+        {
+            dbop.Approve(id);            
+            return RedirectToAction("Viewleaves");
+        }
+        public FileResult Download(string path)
+        {
+            
+            string actpath = Path.Combine(_webHostEnvironment.WebRootPath, path);
+            byte[] filebytes = System.IO.File.ReadAllBytes(actpath);
+            return File(filebytes, GetContentType(actpath), Path.GetFileName(actpath));
+        }
+        private string GetContentType(string path)
+        {
+            Dictionary<string,string> types = new Dictionary<string, string> { 
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.ms-word"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"}
+            };
+            string ext = Path.GetExtension(path).ToLower();
+            return types[ext];
+        }
+        public IActionResult Reject(int id)
+        {
+            dbop.Reject(id);
+            return RedirectToAction("Viewleaves");
         }
     }
 }

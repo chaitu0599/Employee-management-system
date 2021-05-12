@@ -2,6 +2,7 @@
     ViewData["Title"] = "Display Data";
     string[] TableHeaders = new string[] {
                     "Reference number",
+                    "Employee Id",
                     "Start Date",
                     "End Date",
                     "Leave Type",
@@ -10,27 +11,13 @@
                     "Status"
                     };
 }
-<head>
+<head >
     <script lang="javascript">
         function view(p) {
-            location.href = "LeaveDetails/" + p;
-        }
-        function edit(p) {
-            location.href = "EditLeaves/" + p;
-        }
-        function del(p) {
-            var x = window.prompt("Do you really want to delete?Press YES to confirm.");
-            if(x=="YES")
-                location.href = "DeleteLeave/" + p;
-            else
-                location.href = "Leavespage" + p;
-        }
-        function create() {
-            location.href = "Leaveapplication";
+            location.href = "Leavedetails/" + p;
         }
         function down(p) {
-      
-                location.href = "Download/" + p;
+            location.href = "Download/" + p;
         }
     </script>
 </head>
@@ -38,7 +25,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Details</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -46,14 +33,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="add">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item ml-auto">
 
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
@@ -86,23 +74,19 @@
                         {
                             <tr>
                                 <td>@Data.id</td>
+                                <td>@Data.empid</td>
                                 <td>@Data.Startdate</td>
                                 <td>@Data.Enddate</td>
                                 <td>@Data.Leavetype</td>
                                 <td>@Data.Reason</td>
-                                <td>@Data.Doc</td>
+                                <td>@Html.ActionLink("Download", "Download", new { path=Data.Doc })</td>
                                 <td>@Data.Status</td>
                                 <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
-                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
-                                <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
                             </tr>
                         }
                     }
                 }
             </tbody>
         </table>
-        <center>
-            <button class="btn btn-info" onclick="create()">Apply for a Leave</button>
-        </center>
     </div>
 </body>

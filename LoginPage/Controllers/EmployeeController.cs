@@ -315,62 +315,6 @@ namespace LoginPage.Controllers
             return RedirectToAction("Leavespage");
 
         }
-        public IActionResult Download(int id)
-        {
-            try
-            {
-                con.Open();
-                com.Connection = con;
-                var par1 = com.CreateParameter();
-                par1.Value = id;
-                par1.ParameterName = "@id";
-                com.Parameters.Add(par1);
-                com.CommandText = "SELECT [Doc] FROM [Login].[dbo].[Leaves1] WHERE id=@id";
-                dr = com.ExecuteReader();
-                
-                    var path = Path.Combine(
-                           Directory.GetCurrentDirectory(),
-                           "wwwroot", dr["Doc"].ToString());
-                    var memory = new MemoryStream();
-                    using (var stream = new FileStream(path, FileMode.Open))
-                    {
-                        stream.CopyToAsync(memory);
-                    }
-                    memory.Position = 0;
-                con.Close();
-                return File(memory, GetContentType(path), Path.GetFileName(path));
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            
-        }
-        private string GetContentType(string path)
-        {
-            var types = GetMimeTypes();
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
-        }
-
-        private Dictionary<string, string> GetMimeTypes()
-        {
-            return new Dictionary<string, string>
-            {
-                {".txt", "text/plain"},
-                {".pdf", "application/pdf"},
-                {".doc", "application/vnd.ms-word"},
-                {".docx", "application/vnd.ms-word"},
-                {".xls", "application/vnd.ms-excel"},
-                {".xlsx", "application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet"},  
-                {".png", "image/png"},
-                {".jpg", "image/jpeg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"},
-                {".csv", "text/csv"}
-            };
-        }
         private void FetchLeaves(int id)
         {
             //string ServerFolder;

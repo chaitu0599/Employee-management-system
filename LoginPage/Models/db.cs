@@ -220,5 +220,24 @@ namespace LoginPage.Models
             con.Close();
             return(x);
         }
+        public void Approve(int id)
+        {
+            SqlCommand com = new SqlCommand("SP_adminleave", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@id", id);
+            con.Open();
+            com.ExecuteNonQuery();
+            con.Close();
+        }
+        public void Reject(int id)
+        {
+            SqlCommand com = new SqlCommand("SP_adminleave", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@verify", 1);
+            con.Open();
+            com.ExecuteNonQuery();
+            con.Close();
+        }
     }
 }

@@ -9,6 +9,9 @@
     function viewtasks() {
         location.href = "ViewTasks";
     }
+    function viewleaves() {
+        location.href = "ViewLeaves";
+    }
 </script>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -42,7 +45,8 @@
     <center><h1>Welcome! @Model.Username</h1><br><h2>Select the operation you want to perform</h2></center><br>
     <center>
     <button type="button" class="btn btn-primary" onclick="addr()">Add Employee</button>
-    <button type="button" class="btn btn-info" onclick="viewr()">View Employees</button>
-    <button type="button" class="btn btn-outline-dark" onclick="viewtasks()">View All Tasks</button>
+    <button type="button" class="btn btn-outline-info" onclick="viewr()">View Employees</button>
+    <button type="button" class="btn btn-dark" onclick="viewtasks()">View All Tasks</button>
+    <button type="button" class="btn btn-outline-warning" onclick="viewleaves()">View Leave Requests</button>
     </center>
 </div>

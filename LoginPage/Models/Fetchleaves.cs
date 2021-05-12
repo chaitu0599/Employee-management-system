@@ -16,5 +16,6 @@ namespace LoginPage.Models
         public string Reason { get; set; }
         public string Doc { get; set; }
         public string Status { get; set; }
+        public int verify { get; set; }
     }
 }

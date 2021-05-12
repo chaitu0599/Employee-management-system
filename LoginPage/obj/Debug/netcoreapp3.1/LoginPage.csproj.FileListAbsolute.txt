@@ -136,3 +136,13 @@ C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\E
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\Leavespage.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\EditLeaves.cshtml.g.cs
 C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Employee\LeaveDetails.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\Viewleaves.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\obj\Debug\netcoreapp3.1\Razor\Views\Home\Leavedetails.cshtml.g.cs
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\Cake.Core.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\Microsoft.Win32.Registry.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\System.Security.AccessControl.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\System.Security.Principal.Windows.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\Microsoft.Win32.Registry.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Security.AccessControl.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+C:\Users\chait\Desktop\LoginPage\LoginPage\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
