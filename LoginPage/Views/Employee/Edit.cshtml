@@ -58,7 +58,15 @@
 
             <div class="form-group">
                 <label asp-for="Teamname" class="control-label"></label>
-                <input asp-for="Teamname" class="form-control" required />
+                @{ List<string> names = TempData["MyList"] as List<string>; }
+                <select asp-for="Teamname" class="form-control">
+                    @{
+                        foreach (string name in names)
+                        {
+                            <option value="@name">@name</option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="Teamname" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -131,21 +139,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-@{
-    if (TempData["msg"] != null)
-    {
-        if (TempData["msg"].ToString() == "Yes")
-        {
-            <script>
-                alert("Task updated")
-            </script>
-        }
-        if (TempData["msg"].ToString() == "No")
-        {
-            <script>
-                alert("Task updation failed")
-            </script>
-        }
-    }
 }

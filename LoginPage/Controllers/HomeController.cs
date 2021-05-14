@@ -34,18 +34,18 @@ namespace LoginPage.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public HomeController(ILogger<HomeController> logger,IWebHostEnvironment env)
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment env)
         {
             _logger = logger;
             con.ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True";
             _webHostEnvironment = env;
         }
-        
+
         public IActionResult Index()
         {
             return View();
         }
-       
+
         public IActionResult Adlogin()
         {
             return View();
@@ -91,12 +91,25 @@ namespace LoginPage.Controllers
             FetchData();
             return View(employees);
         }
-        
+        public IActionResult TeamAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult TeamAdd([Bind] Teamadd ta)
+        {
+            int x = dbop.teamadd(ta);
+            if (x == 1)
+                TempData["msg"] = "Yes";
+            else
+                TempData["msg"] = "No";
+            return RedirectToAction("add");
+        }
         public IActionResult ExporttoExcel()
         {
             DataSet ds = gtop.Getrecord();
             var stream = new MemoryStream();
-            
+
             using (var package = new ExcelPackage(stream))
             {
                 var worksheet = package.Workbook.Worksheets.Add("sheet1");
@@ -115,7 +128,7 @@ namespace LoginPage.Controllers
         [HttpPost]
         public IActionResult Edit([Bind] empadd em, int id)
         {
-            int x = emdb.Emp(em,id);
+            int x = emdb.Emp(em, id);
             if (x == 1)
             {
                 TempData["msg"] = "Yes";
@@ -143,17 +156,17 @@ namespace LoginPage.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                
+
                 var parameter = com.CreateParameter();
                 parameter.Value = id;
-                parameter.ParameterName="@id";
+                parameter.ParameterName = "@id";
                 com.Parameters.Add(parameter);
 
                 com.CommandText = "Select * from employees where id = @id";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                    emp=new employee()
+                    emp = new employee()
                     {
                         id = dr["id"].ToString()
                     ,
@@ -174,7 +187,7 @@ namespace LoginPage.Controllers
                         role = dr["role"].ToString()
                     ,
                         notes = dr["notes"].ToString(),
-                    } ;
+                    };
                 }
                 con.Close();
             }
@@ -185,7 +198,8 @@ namespace LoginPage.Controllers
         }
         private void FetchData()
         {
-            if (employees.Count > 0) {
+            if (employees.Count > 0)
+            {
                 employees.Clear();
             }
             try
@@ -217,7 +231,7 @@ namespace LoginPage.Controllers
                         role = dr["role"].ToString()
                     ,
                         notes = dr["notes"].ToString(),
-                    }) ;
+                    });
                 }
             }
             catch (Exception)
@@ -233,7 +247,7 @@ namespace LoginPage.Controllers
         [HttpPost]
         public IActionResult form([Bind] empadd em)
         {
-            int x=emdb.Emp(em);
+            int x = emdb.Emp(em);
             if (x == 1)
             {
                 TempData["msg"] = "Yes";
@@ -272,7 +286,7 @@ namespace LoginPage.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                
+
                 com.CommandText = "SELECT TOP (1000) [id],[empid],[Taskname],[Startdate],[Enddate],[Taskduration],[Teamname],[summary],[Taskdetails],[Riskdetails],[Risksolution] FROM [Login].[dbo].[Task1] WHERE [isactive]='1'";
                 dr = com.ExecuteReader();
                 while (dr.Read())
@@ -281,7 +295,7 @@ namespace LoginPage.Controllers
                     {
                         id = dr["id"].ToString()
                     ,
-                        Empid=dr["empid"].ToString()
+                        Empid = dr["empid"].ToString()
                     ,
                         Taskname = dr["Taskname"].ToString()
                     ,
@@ -322,7 +336,7 @@ namespace LoginPage.Controllers
                 con.Open();
                 com.Connection = con;
 
-                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1'";
+                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[comments] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1'";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
@@ -343,17 +357,18 @@ namespace LoginPage.Controllers
                         Doc = dr["Doc"].ToString()
                     ,
                         Status = dr["Status"].ToString()
+                    ,
+                        comment = dr["comments"].ToString()
                     });
                 }
                 con.Close();
             }
             catch (Exception)
             {
-
                 throw;
             }
             return View(fl);
-            
+
         }
         public IActionResult Leavedetails(int id)
         {
@@ -366,11 +381,11 @@ namespace LoginPage.Controllers
                 parameter.Value = id;
                 parameter.ParameterName = "@id";
                 com.Parameters.Add(parameter);
-                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[verify] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1' AND id=@id";
+                com.CommandText = "SELECT TOP (1000) [id],[empid],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[verify],[comments] FROM [Login].[dbo].[Leaves1] WHERE [Isactive]='1' AND id=@id";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                    l=new Fetchleaves()
+                    l = new Fetchleaves()
                     {
                         id = Int32.Parse(dr["id"].ToString())
                     ,
@@ -389,6 +404,8 @@ namespace LoginPage.Controllers
                         Status = dr["Status"].ToString()
                     ,
                         verify = Int32.Parse(dr["verify"].ToString())
+                    ,
+                        comment = dr["comments"].ToString()
                     };
 
                 }
@@ -397,23 +414,31 @@ namespace LoginPage.Controllers
             {
                 throw;
             }
-                return View(l);
+            return View(l);
         }
-        public IActionResult Approve(int id)
+        public IActionResult Leaveaction([Bind] Fetchleaves l)
         {
-            dbop.Approve(id);            
-            return RedirectToAction("Viewleaves");
+            if (l.answer == "Approve")
+                dbop.Approve(l.id, l.comment);
+            else
+                dbop.Reject(l.id, l.comment);
+            return RedirectToAction("Leavedetails");
         }
         public FileResult Download(string path)
         {
-            
+
             string actpath = Path.Combine(_webHostEnvironment.WebRootPath, path);
             byte[] filebytes = System.IO.File.ReadAllBytes(actpath);
             return File(filebytes, GetContentType(actpath), Path.GetFileName(actpath));
         }
+        public ActionResult viewd(string path)
+        {
+            string actpath = Path.Combine(_webHostEnvironment.WebRootPath, path);
+            return Redirect(actpath);
+        }
         private string GetContentType(string path)
         {
-            Dictionary<string,string> types = new Dictionary<string, string> { 
+            Dictionary<string, string> types = new Dictionary<string, string> {
                 {".txt", "text/plain"},
                 {".pdf", "application/pdf"},
                 {".doc", "application/vnd.ms-word"},
@@ -428,11 +453,6 @@ namespace LoginPage.Controllers
             };
             string ext = Path.GetExtension(path).ToLower();
             return types[ext];
-        }
-        public IActionResult Reject(int id)
-        {
-            dbop.Reject(id);
-            return RedirectToAction("Viewleaves");
         }
     }
 }

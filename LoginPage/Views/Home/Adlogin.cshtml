@@ -3,6 +3,10 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
@@ -24,13 +28,16 @@
                     <input asp-for="Upassword" class="form-control" type="password" required />
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Login" />
+                    <input class="btn btn-primary" id="myBtn" type="submit" value="Login" />
                     <input class="btn btn-primary" type="reset" value="Reset" />
+                </div>
+                <div class="alert alert-danger" id="myAlert">
+                    <strong>Login failed!</strong> The credentials entered are wrong.
                 </div>
             </form>
         </div>
-        <div class="col-sm-4"></div>
     </div>
+    <div class="col-sm-4"></div>
 </div>
 @{
 
@@ -39,15 +46,25 @@
         if (TempData["msg"].ToString() == "Yes")
         {
             <script>
-        window.location.replace("add")
+                window.location.replace("add")
             </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        @if (TempData["msg"].ToString() == "No")
         {
             <script>
-                    alert("Login failed")
+                $(document).ready(function () {
+                    $("#myAlert").show()
+                });
             </script>
-        }
-        TempData["msg"] = null;
+
+        }      }
+    else
+    {
+    <script>
+        $(document).ready(function () {
+            $("#myAlert").hide()
+        });
+    </script>
     }
+    TempData["msg"] = null;
 }

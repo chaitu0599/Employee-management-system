@@ -7,7 +7,8 @@
                     "Leave Type",
                     "Reason",
                     "Doc",
-                    "Status"
+                    "Status",
+                    "Comments by admin"
                     };
 }
 <head>
@@ -92,9 +93,13 @@
                                 <td>@Data.Reason</td>
                                 <td>@Data.Doc</td>
                                 <td>@Data.Status</td>
+                                <td>@Data.comment</td>
                                 <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
+                                @if (Convert.ToBoolean(Data.verify))
+                                {
                                 <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
                                 <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
+                                }
                             </tr>
                         }
                     }

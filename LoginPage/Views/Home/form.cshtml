@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Create Record";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <html>
 <body>
     <header>
@@ -23,7 +24,7 @@
                         <li class="nav-item ml-auto">
 
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
@@ -37,30 +38,33 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
+                <div class="alert alert-success" id="myAlert">
+                    <strong>Success!</strong> The record was added successfully.
+                </div>
                 <form class="form-vertical" asp-action="form">
                     <div class="form-group">
                         <label class="control-label">Name</label>
-                        <input asp-for="name" class="form-control" type="text" />
+                        <input asp-for="name" class="form-control" required type="text" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Date of Birth</label>
-                        <input asp-for="dob" class="form-control" type="date" />
+                        <input asp-for="dob" class="form-control" type="date" required />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Father's Name</label>
-                        <input asp-for="father" class="form-control" type="text" />
+                        <input asp-for="father" class="form-control" type="text" required />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Mother's Name</label>
-                        <input asp-for="mother" class="form-control" type="text" />
+                        <input asp-for="mother" class="form-control" type="text" required />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Address</label>
-                        <input asp-for="address" class="form-control" type="text" />
+                        <input asp-for="address" class="form-control" type="text" required />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Salary</label>
-                        <input asp-for="salary" class="form-control" type="number" />
+                        <input asp-for="salary" class="form-control" type="number" required />
                     </div>
                     <div class="form-inline">
                         <label class="control-label p-3">Fresher</label>
@@ -82,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Notes</label>
-                        <textarea asp-for="notes"></textarea>
+                        <textarea asp-for="notes" required></textarea>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Submit" />
@@ -92,24 +96,34 @@
             </div>
             <div class="col-sm-4"></div>
         </div>
-        
+
     </div>
 </body>
 </html>
-@{        
+@{
     if (TempData["msg"] != null)
     {
         if (TempData["msg"].ToString() == "Yes")
         {
-                <script>
-                    alert("Record added")
-                </script>
+            <script>
+                $(document).ready(function () {
+                    $("#myAlert").show()
+                });
+            </script>
         }
         if (TempData["msg"].ToString() == "No")
         {
-                <script>
-                    alert("Record creation failed")
-                </script>
-            }
+            <script>
+                alert("Record creation failed")
+            </script>
         }
     }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#myAlert").hide()
+            });
+        </script>
+    }
+}

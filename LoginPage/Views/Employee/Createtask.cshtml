@@ -46,10 +46,20 @@
                         <label class="control-label">End Date</label>
                         <input asp-for="Enddate" class="form-control" type="date" />
                     </div>
+
                     <div class="form-group">
                         <label class="control-label">Team Name</label>
-                        <input asp-for="Teamname" class="form-control" type="text" />
-                    </div>
+                        @{ List<string> names = TempData["MyList"] as List<string>; }
+                            <select asp-for="Teamname" class="form-control">
+                                @{ 
+                                foreach(string name in names)
+                                {
+                                <option value="@name">@name</option>
+                                }
+                                }
+
+                            </select>
+                        </div>
                     <div class="form-group">
                         <label class="control-label">Task Summary</label>
                         <input asp-for="Summary" class="form-control" type="text" />
@@ -111,20 +121,3 @@
         $("#Select1").trigger("change");
     </script>
 </body>
-@{
-    if (TempData["msg"] != null)
-    {
-        if (TempData["msg"].ToString() == "Yes")
-        {
-            <script>
-                alert("Task added")
-            </script>
-        }
-        if (TempData["msg"].ToString() == "No")
-        {
-            <script>
-                alert("Task addition failed")
-            </script>
-        }
-    }
-}

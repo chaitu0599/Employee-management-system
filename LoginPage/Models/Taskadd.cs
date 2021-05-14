@@ -7,6 +7,7 @@ namespace LoginPage.Models
 {
     public class Taskadd
     {
+
         public string Taskname { get; set; }
         public DateTime Startdate { get; set; }
         public DateTime Enddate { get; set; }

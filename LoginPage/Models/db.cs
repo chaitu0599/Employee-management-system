@@ -220,24 +220,40 @@ namespace LoginPage.Models
             con.Close();
             return(x);
         }
-        public void Approve(int id)
+        public void Approve(int id,string comment)
         {
             SqlCommand com = new SqlCommand("SP_adminleave", con);
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@comment", comment);
             con.Open();
             com.ExecuteNonQuery();
             con.Close();
         }
-        public void Reject(int id)
+        public void Reject(int id,string comment)
         {
             SqlCommand com = new SqlCommand("SP_adminleave", con);
             com.CommandType = CommandType.StoredProcedure;
             com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@comment", comment);
             com.Parameters.AddWithValue("@verify", 1);
             con.Open();
             com.ExecuteNonQuery();
             con.Close();
+        }
+        public int teamadd(Teamadd ta)
+        {
+            SqlCommand com = new SqlCommand("SP_teaminsert", con);
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Teamname",ta.Name);
+            com.Parameters.AddWithValue("@Startdate", ta.Startdate);
+            com.Parameters.AddWithValue("@Enddate", ta.Enddate);
+            con.Open();
+            com.ExecuteNonQuery();
+            int x = 1;
+            con.Close();
+            return(x);
+
         }
     }
 }

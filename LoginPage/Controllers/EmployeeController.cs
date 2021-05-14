@@ -11,6 +11,7 @@ using System.Data;
 using System.IO;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 
 namespace LoginPage.Controllers
 {
@@ -82,6 +83,7 @@ namespace LoginPage.Controllers
         }
         public IActionResult Edit(int id)
         {
+            fetchteams();
             FetchData(id);
             return View(tk);
         }
@@ -93,11 +95,33 @@ namespace LoginPage.Controllers
                 TempData["msg"] = "Yes";
             else
                 TempData["msg"] = "No";
-            return View();
+            return RedirectToAction("Viewtask");
         }
         public IActionResult Createtask()
         {
+            fetchteams();
             return View();
+        }
+        private void fetchteams()
+        {
+            List<string> name = new List<string>();
+            try
+            {
+                con.Open();
+                com.Connection = con;
+                com.CommandText = "SELECT Teamname FROM Teams";
+                dr=com.ExecuteReader();
+                while (dr.Read())
+                {
+                    name.Add(dr["Teamname"].ToString());
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            TempData["MyList"] = name;
+            con.Close();
         }
         [HttpPost]
         public IActionResult Createtask([Bind] Taskadd ta)
@@ -111,7 +135,7 @@ namespace LoginPage.Controllers
             {
                 TempData["msg"] = "No";
             }
-            return View();
+            return RedirectToAction("Viewtask");
         }
         public IActionResult Leaveapplication()
         {
@@ -126,7 +150,9 @@ namespace LoginPage.Controllers
                 folder = "documents/";
                 folder += Guid.NewGuid().ToString() + la.Doc.FileName;
                 string ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
-                la.Doc.CopyToAsync(new FileStream(ServerFolder,FileMode.Create));
+                FileStream fs = new FileStream(ServerFolder, FileMode.Create);
+                la.Doc.CopyToAsync(fs);
+                fs.Close();
             }
             int x = dbop.leaveapp(la, folder, HttpContext.Session.GetString("empid"));
             if (x == 1)
@@ -328,7 +354,7 @@ namespace LoginPage.Controllers
                 parameter.ParameterName = "@id";
                 com.Parameters.Add(parameter);
 
-                com.CommandText = "Select [id], [StartDate],[Enddate],[Leavetype],[Reason],[Doc],[Status] from Leaves1 where id = @id";
+                com.CommandText = "Select [id], [StartDate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[comments],[verify] from Leaves1 where id = @id";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
@@ -350,6 +376,10 @@ namespace LoginPage.Controllers
                             Status=dr["Status"].ToString(),
                     
                             Reason = dr["Reason"].ToString()
+                            ,
+                            verify=Int32.Parse(dr["verify"].ToString())
+                            ,
+                            comment=dr["comments"].ToString()
                         };
                     }
                 }
@@ -361,7 +391,6 @@ namespace LoginPage.Controllers
                 throw;
             }
         }
-
         private void FetchLeaves()
         {
             //string ServerFolder;
@@ -377,15 +406,11 @@ namespace LoginPage.Controllers
                 parameter.Value = Int32.Parse(HttpContext.Session.GetString("empid"));
                 parameter.ParameterName = "@empid";
                 com.Parameters.Add(parameter);
-                com.CommandText = "SELECT TOP (1000) [id],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status] FROM [Login].[dbo].[Leaves1] WHERE [isactive]='1' AND empid=@empid";
+                com.CommandText = "SELECT TOP (1000) [id],[Startdate],[Enddate],[Leavetype],[Reason],[Doc],[Status],[verify],[comments] FROM [Login].[dbo].[Leaves1] WHERE [isactive]='1' AND empid=@empid";
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
-                        //ServerFolder = Path.Combine(_webHostEnvironment.WebRootPath, dr["Doc"].ToString());
-
-                        //using (var stream = System.IO.File.OpenRead(ServerFolder))
-                        {
-
+     
                             leaves.Add(new Fetchleaves()
                             {
                                 id = Int32.Parse(dr["id"].ToString())
@@ -401,9 +426,12 @@ namespace LoginPage.Controllers
                                 Doc = dr["Doc"].ToString()
                             ,
                                 Reason = dr["Reason"].ToString()
+                            ,
+                                comment=dr["comments"].ToString()
+                            ,
+                                verify=Int32.Parse(dr["verify"].ToString())
                             });
-                        }
-                    }
+                }
                 
                 con.Close();
 
