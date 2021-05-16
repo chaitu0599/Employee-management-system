@@ -1,4 +1,5 @@
 ﻿@model LoginPage.Models.Teamadd
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -33,6 +34,10 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
+                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Success!</strong> The team was added successfully.
+                </div>
                 <form class="form-vertical" asp-action="TeamAdd">
                     <div class="form-group">
                         <label class="control-label">Name</label>
@@ -63,14 +68,28 @@
         if (TempData["msg"].ToString() == "Yes")
         {
             <script>
-                    alert("Team added")
+                $(document).ready(function () {
+                    $("#myAlert").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
+                });
             </script>
         }
         if (TempData["msg"].ToString() == "No")
         {
             <script>
-                    alert("Team addition failed")
+                alert("Team addition failed")
             </script>
         }
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#myAlert").hide()
+            });
+        </script>
     }
 }

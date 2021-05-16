@@ -22,6 +22,7 @@
     </script>
 </head>
 <body>
+    <center><h1>All leaves</h1></center>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -81,7 +82,7 @@
                                 <td>@Data.Reason</td>
                                 <td>@Html.ActionLink("Download", "Download", new { path=Data.Doc })</td>
                                 <td>@Data.Status</td>
-                                <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
+                                <td><button class="btn btn-outline-primary" onclick="view(@Data.id)">View</button></td>
                             </tr>
                         }
                     }

@@ -103,7 +103,7 @@ namespace LoginPage.Controllers
                 TempData["msg"] = "Yes";
             else
                 TempData["msg"] = "No";
-            return RedirectToAction("add");
+            return View();
         }
         public IActionResult ExporttoExcel()
         {
@@ -416,13 +416,13 @@ namespace LoginPage.Controllers
             }
             return View(l);
         }
-        public IActionResult Leaveaction([Bind] Fetchleaves l)
+        public IActionResult Leaveaction([Bind] Fetchleaves l,string approve,string reject)
         {
-            if (l.answer == "Approve")
+            if (!string.IsNullOrEmpty(approve))
                 dbop.Approve(l.id, l.comment);
-            else
+            if (!string.IsNullOrEmpty(reject))
                 dbop.Reject(l.id, l.comment);
-            return RedirectToAction("Leavedetails");
+            return RedirectToAction("Viewleaves");
         }
         public FileResult Download(string path)
         {

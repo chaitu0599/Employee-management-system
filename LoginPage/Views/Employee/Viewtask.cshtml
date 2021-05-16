@@ -53,9 +53,7 @@
                         <li class="nav-item ml-auto">
 
                         </li>
-                        <li class="nav-link text-dark">
-                            <a href="/Employee/ExporttoExcel">Export</a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                         </li>
@@ -64,6 +62,10 @@
             </div>
         </nav>
     </header>
+    <center>
+        <button class="btn btn-info" onclick="create()">Create New Task</button>
+        <h1>Your Tasks</h1>
+    </center>
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
@@ -96,8 +98,8 @@
                                 <td>@Data.Taskdetails</td>
                                 <td>@Data.Riskdetails</td>
                                 <td>@Data.Risksolution</td>
-                                <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
-                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
+                                <td><button class="btn btn-outline-secondary" onclick="view(@Data.id)">View</button></td>
+                                <td><button class="btn btn-primary" onclick="edit(@Data.id)">Edit</button></td>
                                 <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
                             </tr>
                         }
@@ -105,8 +107,6 @@
                 }
             </tbody>
         </table>
-        <center>
-        <button class="btn btn-info" onclick="create()">Create New Task</button>
-        </center>
+                <a href="/Employee/ExporttoExcel">Export</a>
     </div>
 </body>

@@ -1,4 +1,5 @@
 ﻿@model LoginPage.Models.Leaveapp
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -34,6 +35,10 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <form class="form-vertical" method="post" enctype="multipart/form-data" asp-action="Leaveapplication">
+                    <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                        <button type="button" class="close">&times;</button>
+                        <strong>Success!</strong> Leave request submitted.
+                    </div>
                     <div class="form-group">
                         <label class="control-label">Start Date</label>
                         <input asp-for="Startdate" class="form-control" type="date" required />
@@ -70,19 +75,33 @@
     </div>
 </body>
 @{
-    if (TempData["msg"] != null)
+    if (TempData["msgl"] != null)
     {
-        if (TempData["msg"].ToString() == "Yes")
+        if (TempData["msgl"].ToString() == "Yes")
         {
             <script>
-                alert("Leave applied")
+                $(document).ready(function () {
+                    $("#myAlert").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
+                });
             </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        if (TempData["msgl"].ToString() == "No")
         {
             <script>
                 alert("Leave application failed")
             </script>
         }
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#myAlert").hide()
+            });
+        </script>
     }
 }

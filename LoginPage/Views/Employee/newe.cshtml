@@ -1,27 +1,77 @@
 ﻿@model LoginPage.Models.Newemp
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myAlert1").hide()
+    });
+        $(document).ready(function () {
+            $("#myAlert").hide()
+        });
+            $(document).ready(function () {
+            $("#myAlert3").hide()
+        });
+            $(document).ready(function () {
+            $("#myAlert2").hide()
+        });
+    function validate(ev) {
+        ev.preventDefault;
+        var pwd1 = document.getElementById("pwd1").value;
+        var pwd2 = document.getElementById("pwd2").value;
+        if (pwd1 !== pwd2) {
+            $(document).ready(function () {
+                $("#myAlert1").show("slow", function () {
+                    $(".close").click(function () {
+                        $("#myAlert1").alert("close");
+                    });
+                });
+            });
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+</script>
 <div class="container">
     <center><h1>New Employee Registration</h1></center>
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <form class="form-horizontal" asp-action="newe">
+            <form class="form-horizontal" asp-action="newe" onsubmit="return validate(this)">
                 <div class="form-group">
                     <label class="control-label">Employee ID</label>
                     <input asp-for="id" class="form-control" type="number" required>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Username</label>
-                    <input asp-for="Username" class="form-control" type="text" required />
+                    <label class="control-label">Password</label>
+                    <input asp-for="Password" class="form-control" id="pwd1" type="password" required />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input asp-for="Password" class="form-control" type="password" required />
+                    <label class="control-label">Confirm password</label>
+                    <input class="form-control" id="pwd2" type="password" required />
                 </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Register" />
                     <input class="btn btn-primary" type="reset" value="Reset" />
                 </div>
-
+                <div class="alert alert-danger alert-dismissible fade show" id="myAlert1">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Error!</strong> Passwords do not match.
+                </div>
+                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Success!</strong> Registration done, please relogin.
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" id="myAlert2">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Error!</strong> Employee already exists, please login.
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" id="myAlert3">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Error!</strong> Employee does not exist. Contact your admin.
+                </div>
+                <a href="Emplogin">Back to Login</a>
             </form>
         </div>
         <div class="col-sm-4"></div>
@@ -29,22 +79,43 @@
 </div>
 @{
 
-    if (TempData["msg"] != null)
+    if (TempData["msg1"] != null)
     {
-        if (TempData["msg"].ToString() == "Yes")
+        if (TempData["msg1"].ToString() == "Yes")
         {
             <script>
-                alert("Registration successful! Please relogin")
-                window.location.replace("Emplogin")
+                $(document).ready(function () {
+                    $("#myAlert").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
+                });
             </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        if (TempData["msg1"].ToString() == "No")
         {
             <script>
-                alert("Employee does not exist. Contact your admin.")
-                window.location.replace("Emplogin")
+                $(document).ready(function () {
+                    $("#myAlert3").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert3").alert("close");
+                        });
+                    });
+                });
             </script>
         }
-        TempData["msg"] = null;
+        if(TempData["msg1"].ToString() == "Nor")
+                {
+            <script >
+                $(document).ready(function () {
+                    $("#myAlert2").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert2").alert("close");
+                        });
+                    });
+                });
+            </script>
+                }
     }
 }

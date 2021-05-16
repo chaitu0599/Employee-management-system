@@ -3,6 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
@@ -23,10 +24,6 @@
                     <input asp-for="empid" class="form-control" type="number" required />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Username</label>
-                    <input asp-for="Username" class="form-control" type="text" required />
-                </div>
-                <div class="form-group">
                     <label class="control-label">Password</label>
                     <input asp-for="Upassword" class="form-control" type="password" required />
                 </div>
@@ -38,6 +35,10 @@
                     <button class="btn btn-secondary" onclick="newe()">New Employee</button>
                 </div>
             </form>
+            <div class="alert alert-danger alert-dismissible fade show" id="myAlert">
+                <button type="button" class="close">&times;</button>
+                <strong>Login failed!</strong> The credentials entered are wrong.
+            </div>
         </div>
         <div class="col-sm-4"></div>
     </div>
@@ -49,15 +50,29 @@
         if (TempData["msg"].ToString() == "Yes")
         {
             <script>
-        window.location.replace("empop")
+                window.location.replace("empop")
             </script>
         }
         if (TempData["msg"].ToString() == "No")
         {
             <script>
-                    alert("Login failed")
+                $(document).ready(function () {
+                    $("#myAlert").show("slow", function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
+                });
             </script>
         }
         TempData["msg"] = null;
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#myAlert").hide()
+            });
+        </script>
     }
 }

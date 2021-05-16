@@ -29,6 +29,7 @@
     </script>
 </head>
 <body>
+    <center><h1>All employees</h1></center>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -47,10 +48,6 @@
                         </li>
                         <li class="nav-item ml-auto">
 
-                        </li>
-                        
-                        <li class="nav-link text-dark">
-                            <a href="/Home/ExporttoExcel">Export</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
@@ -92,7 +89,7 @@
                                 <td>@Data.fresher</td>
                                 <td>@Data.role</td>
                                 <td>@Data.notes</td>
-                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
+                                <td><button class="btn btn-primary" onclick="edit(@Data.id)">Edit</button></td>
                                 <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
                             </tr>
                         }
@@ -101,6 +98,7 @@
             </tbody>
 
         </table>
+        <a href="/Home/ExporttoExcel">Export</a>
     </div>
 
 </body>

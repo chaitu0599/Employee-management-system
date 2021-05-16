@@ -33,7 +33,6 @@ namespace LoginPage.Models
         {
             SqlCommand com = new SqlCommand("SP_elogin", con);
             com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.AddWithValue("@Username", emp.Username);
             com.Parameters.AddWithValue("@Upassword", emp.Upassword);
             com.Parameters.AddWithValue("@Empid", emp.empid);
             SqlParameter oblogin = new SqlParameter();
@@ -61,17 +60,32 @@ namespace LoginPage.Models
             com.ExecuteNonQuery();
             int res = Convert.ToInt32(oblogin.Value);
             con.Close();
-            if (res == 1)
+            SqlCommand co = new SqlCommand("SP_newemp1", con);
+            co.CommandType = CommandType.StoredProcedure;
+            co.Parameters.AddWithValue("@id", n.id);
+            SqlParameter oblogin1 = new SqlParameter();
+            oblogin1.ParameterName = "@Isvalid";
+            oblogin1.SqlDbType = SqlDbType.Bit;
+            oblogin1.Direction = ParameterDirection.Output;
+            co.Parameters.Add(oblogin1);
+            con.Open();
+            co.ExecuteNonQuery();
+            int res1 = Convert.ToInt32(oblogin1.Value);
+            con.Close();
+
+            if (res == 1 && res1==0)
             {
                 SqlCommand com1 = new SqlCommand("SP_emplogin", con);
                 com1.CommandType = CommandType.StoredProcedure;
                 com1.Parameters.AddWithValue("@Empid", n.id);
-                com1.Parameters.AddWithValue("@Username", n.Username);
                 com1.Parameters.AddWithValue("@Password", n.Password);
                 con.Open();
                 com1.ExecuteNonQuery();
                 con.Close();
+                return res;
             }
+            else if (res1 == 1 && res==1)
+                return 2;
             return res;
         }
         public int taskadd(Taskadd ta,string empid)

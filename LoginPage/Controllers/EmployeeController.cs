@@ -45,14 +45,28 @@ namespace LoginPage.Controllers
             int res = dbop.LoginCheck(emp);
             if (res == 1)
             {
-                HttpContext.Session.SetString("username", emp.Username);
-                HttpContext.Session.SetString("empid", emp.empid.ToString());
+                SqlConnection con = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True");
+                SqlCommand co = new SqlCommand();
+                co.Connection = con;
+                con.Open();
+                var parameter = com.CreateParameter();
+                parameter.Value = emp.empid;
+                parameter.ParameterName = "@id";
+                co.Parameters.Add(parameter);
+                co.CommandText = "SELECT [name] from employees WHERE id=@id";
+                dr = co.ExecuteReader();
+                while (dr.Read())
+                {
+                    HttpContext.Session.SetString("username", dr["name"].ToString());
+                    HttpContext.Session.SetString("empid", emp.empid.ToString());
+
+                }
                 TempData["msg"] = "Yes";
+                con.Close();
+                return RedirectToAction("empop");
             }
             else
-            {
                 TempData["msg"] = "No";
-            }
             return View();
         }
         public IActionResult empop()
@@ -73,12 +87,15 @@ namespace LoginPage.Controllers
             int res = dbop.RegisterCheck(n);
             if (res == 1)
             {
-                TempData["msg"] = "Yes";
+                TempData["msg1"] = "Yes";
+            }
+            else if (res == 2)
+            {
+                TempData["msg1"] = "Nor";
             }
             else
-            {
-                TempData["msg"] = "No";
-            }
+                TempData["msg1"] = "No";
+
             return View();
         }
         public IActionResult Edit(int id)
@@ -156,9 +173,9 @@ namespace LoginPage.Controllers
             }
             int x = dbop.leaveapp(la, folder, HttpContext.Session.GetString("empid"));
             if (x == 1)
-                TempData["msg"] = "Yes";
+                TempData["msgl"] = "Yes";
             else
-                TempData["msg"] = "No";
+                TempData["msgl"] = "No";
             return View();
         }
         public IActionResult Viewtask()

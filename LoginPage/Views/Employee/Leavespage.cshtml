@@ -63,6 +63,10 @@
             </div>
         </nav>
     </header>
+    <center >
+        <button class="btn btn-info" onclick="create()">Apply for a Leave</button>
+        <h1>Your Leaves</h1>
+    </center>
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
@@ -94,10 +98,10 @@
                                 <td>@Data.Doc</td>
                                 <td>@Data.Status</td>
                                 <td>@Data.comment</td>
-                                <td><button class="btn btn-outline-success" onclick="view(@Data.id)">View</button></td>
+                                <td><button class="btn btn-outline-secondary" onclick="view(@Data.id)">View</button></td>
                                 @if (Convert.ToBoolean(Data.verify))
                                 {
-                                <td><button class="btn btn-warning" onclick="edit(@Data.id)">Edit</button></td>
+                                <td><button class="btn btn-primary" onclick="edit(@Data.id)">Edit</button></td>
                                 <td><button class="btn btn-danger" onclick="del(@Data.id)">Delete</button></td>
                                 }
                             </tr>
@@ -106,8 +110,5 @@
                 }
             </tbody>
         </table>
-        <center>
-            <button class="btn btn-info" onclick="create()">Apply for a Leave</button>
-        </center>
     </div>
 </body>

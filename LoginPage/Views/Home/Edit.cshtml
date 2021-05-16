@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -35,12 +35,16 @@
     </header>
     <div class="container">
         <center>
-        <h1>Edit</h1>
-        <h4>employee</h4>
+            <h1>Edit</h1>
+            <h4>employee</h4>
         </center>
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
+                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                    <button type="button" class="close">&times;</button>
+                    <strong>Success!</strong>Record edited successfully.
+                </div>
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -107,7 +111,7 @@
                     </div>
                 </form>
             </div>
-</div>
+        </div>
     </div>
 </body>
 @section Scripts {
@@ -119,14 +123,28 @@
         if (TempData["msg"].ToString() == "Yes")
         {
             <script>
-                alert("Record updated")
+                $(document).ready(function () {
+                    $("#myAlert").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
+                });
             </script>
         }
         if (TempData["msg"].ToString() == "No")
         {
             <script>
-                    alert("Record updation failed")
+                alert("Record updation failed")
             </script>
         }
+    }
+    else
+    {
+        <script>
+            $(document).ready(function () {
+                $("#myAlert").hide()
+            });
+        </script>
     }
 }

@@ -38,7 +38,8 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <div class="alert alert-success" id="myAlert">
+                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                    <button type="button" class="close">&times;</button>
                     <strong>Success!</strong> The record was added successfully.
                 </div>
                 <form class="form-vertical" asp-action="form">
@@ -107,7 +108,11 @@
         {
             <script>
                 $(document).ready(function () {
-                    $("#myAlert").show()
+                    $("#myAlert").show('slow', function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
                 });
             </script>
         }

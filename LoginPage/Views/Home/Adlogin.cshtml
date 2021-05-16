@@ -3,10 +3,7 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
         setTimeout("preventBack()", 0);
@@ -31,7 +28,8 @@
                     <input class="btn btn-primary" id="myBtn" type="submit" value="Login" />
                     <input class="btn btn-primary" type="reset" value="Reset" />
                 </div>
-                <div class="alert alert-danger" id="myAlert">
+                <div class="alert alert-danger alert-dismissible fade show" id="myAlert">
+                    <button type="button" class="close">&times;</button>
                     <strong>Login failed!</strong> The credentials entered are wrong.
                 </div>
             </form>
@@ -53,7 +51,11 @@
         {
             <script>
                 $(document).ready(function () {
-                    $("#myAlert").show()
+                    $("#myAlert").show("slow", function () {
+                        $(".close").click(function () {
+                            $("#myAlert").alert("close");
+                        });
+                    });
                 });
             </script>
 
@@ -66,5 +68,5 @@
         });
     </script>
     }
-    TempData["msg"] = null;
+    TempData["msg"] = null; 
 }
