@@ -9,7 +9,7 @@ namespace LoginPage.Models
     {
         public string id { get; set; }
         public string name { get; set; }
-        public string dob { get; set; }
+        public DateTime dob { get; set; }
         public string father { get; set; }
         public string mother { get; set; }
         public string address { get; set; }

@@ -9,7 +9,7 @@ namespace LoginPage.Models
     public class Fetchleaves
     {
         public int id { get; set; }
-        public int empid { get; set; }
+        public string name { get; set; }
         public DateTime Startdate { get; set; }
         public DateTime Enddate { get; set; }
         public string Leavetype { get; set; }

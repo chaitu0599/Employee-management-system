@@ -22,7 +22,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -31,10 +31,7 @@
     </header>
     <div class="container">
         <center><h1>Leave Application</h1></center>
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <form class="form-vertical" method="post" enctype="multipart/form-data" asp-action="Leaveapplication">
+                <form class="was-validated" method="post" enctype="multipart/form-data" asp-action="Leaveapplication">
                     <div class="alert alert-success alert-dismissible fade show" id="myAlert">
                         <button type="button" class="close">&times;</button>
                         <strong>Success!</strong> Leave request submitted.
@@ -42,10 +39,14 @@
                     <div class="form-group">
                         <label class="control-label">Start Date</label>
                         <input asp-for="Startdate" class="form-control" type="date" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Start date is required.</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">End Date</label>
                         <input asp-for="Enddate" class="form-control" type="date" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">End date is required.</div>
                     </div>
                     <div class="form-group">
                         <label for="Select1">Leave Type</label>
@@ -59,19 +60,20 @@
                     <div class="form-group">
                         <label class="control-label">Reason</label>
                         <input asp-for="Reason" class="form-control" type="text" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Reason is required.</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Upload a Document</label>
-                        <input asp-for="Doc" class="form-control-file" type="file" />
+                        <input asp-for="Doc" class="form-control-file" type="file" required />
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Document is required.</div>
                     </div>
                     <div class="form-group">
                         <input class="btn btn-info" type="submit" value="Submit" />
                         <input class="btn btn-outline-secondary" type="reset" value="Reset" />
                     </div>
                 </form>
-            </div>
-            <div class="col-sm-4"></div>
-        </div>
     </div>
 </body>
 @{
@@ -84,6 +86,7 @@
                     $("#myAlert").show('slow', function () {
                         $(".close").click(function () {
                             $("#myAlert").alert("close");
+                            window.location.replace("Leavespage");
                         });
                     });
                 });

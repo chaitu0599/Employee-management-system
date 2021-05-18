@@ -4,89 +4,124 @@
     ViewData["Title"] = "EditLeaves";
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<h1>EditLeaves</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <div class="alert alert-success alert-dismissible fade show" id="myAlert">
-            <button type="button" class="close">&times;</button>
-            <strong>Success!</strong> The leave was updated succesfully.
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                    </li>
+                    <li class="nav-item ml-auto">
+
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <form asp-action="EditLeaves" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Startdate" class="control-label"></label>
-                <input asp-for="Startdate" class="form-control" />
-                <span asp-validation-for="Startdate" class="text-danger"></span>
+    </nav>
+</header>
+    <h1>EditLeaves</h1>
+    <hr />
+        <div class="container">
+            <div class="alert alert-success alert-dismissible fade show" id="myAlert">
+                <button type="button" class="close">&times;</button>
+                <strong>Success!</strong> The leave was updated succesfully.
             </div>
-            <div class="form-group">
-                <label asp-for="Enddate" class="control-label"></label>
-                <input asp-for="Enddate" class="form-control" />
-                <span asp-validation-for="Enddate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Leavetype">Leave Type</label>
-                <select asp-for="Leavetype" class="form-control" id="Select1" required>
-                    <option value="Sick Leave">Sick Leave</option>
-                    <option value="Casual Leave">Casual Leave</option>
-                    <option value="Earned Leave">Earned Leave</option>
-                    <option value="Flexi Leave">Flexi Leave</option>
-                </select>
-                <span asp-validation-for="Leavetype" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reason" class="control-label"></label>
-                <input asp-for="Reason" class="form-control" />
-                <span asp-validation-for="Reason" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doc" class="control-label"></label>
-                <input asp-for="Doc" class="form-control" type="file" />
-                <span asp-validation-for="Doc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <form asp-action="EditLeaves" enctype="multipart/form-data" class="was-validated">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Startdate" class="control-label"></label>
+                    <input asp-for="Startdate" class="form-control" required/>
+                    <span asp-validation-for="Startdate" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Start date is required.</div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Enddate" class="control-label"></label>
+                    <input asp-for="Enddate" class="form-control" required />
+                    <span asp-validation-for="Enddate" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">End date is required.</div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leavetype">Leave Type</label>
+                    <select asp-for="Leavetype" class="form-control" id="Select1" required>
+                        <option value="Sick Leave">Sick Leave</option>
+                        <option value="Casual Leave">Casual Leave</option>
+                        <option value="Earned Leave">Earned Leave</option>
+                        <option value="Flexi Leave">Flexi Leave</option>
+                    </select>
+                    <span asp-validation-for="Leavetype" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Reason" class="control-label"></label>
+                    <input asp-for="Reason" class="form-control" required/>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Reason is required.</div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Doc" class="control-label"></label>
+                    <input asp-for="Doc" class="form-control" type="file" required />
+                    <span asp-validation-for="Doc" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Document is required.</div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+    <div>
+        <a asp-action="Leavespage">Back to List</a>
     </div>
-</div>
 
-<div>
-    <a asp-action="Leavespage">Back to List</a>
-</div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+    @{
+        if (TempData["msg"] != null)
+        {
+            if (TempData["msg"].ToString() == "Yes")
+            {
+                <script>
+                    $(document).ready(function () {
+                        $("#myAlert").show('slow', function () {
+                            $(".close").click(function () {
+                                $("#myAlert").alert("close");
+                                window.location.replace("Leavespage");
+                            });
+                        });
+                    });
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-@{
-    if (TempData["msg"] != null)
-    {
-        if (TempData["msg"].ToString() == "Yes")
+                </script>
+            }
+            if (TempData["msg"].ToString() == "No")
+            {
+                <script>
+                    alert("Leave updation failed")
+                </script>
+            }
+        }
+        else
         {
             <script>
                 $(document).ready(function () {
-                    $("#myAlert").show('slow', function () {
-                        $(".close").click(function () {
-                            $("#myAlert").alert("close");
-                        });
-                    });
+                    $("#myAlert").hide()
                 });
-
-            </script>
-        }
-        if (TempData["msg"].ToString() == "No")
-        {
-            <script>
-                alert("Leave updation failed")
             </script>
         }
     }
-    else
-    {
-        <script>
-            $(document).ready(function () {
-                $("#myAlert").hide()
-            });
-        </script>
-    }
-}

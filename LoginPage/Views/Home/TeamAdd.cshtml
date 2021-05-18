@@ -1,10 +1,54 @@
 ﻿@model LoginPage.Models.Teamadd
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            font-size: large;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 30px;
+            font-weight: bold;
+            padding-left: 300px;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Details</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Management System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,26 +78,31 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
-                    <button type="button" class="close">&times;</button>
-                    <strong>Success!</strong> The team was added successfully.
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Team has been added.</p>
+                    </div>
                 </div>
-                <form class="form-vertical" asp-action="TeamAdd">
+                <form class="needs-validation" asp-action="TeamAdd" novalidate>
                     <div class="form-group">
                         <label class="control-label">Name</label>
-                        <input asp-for="Name" class="form-control" type="text" />
+                        <input asp-for="Name" class="form-control" type="text" required />
+                        <div class="invalid-feedback">Team name is required.</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Project Start Date</label>
-                        <input asp-for="Startdate" class="form-control" type="date" />
+                        <input asp-for="Startdate" class="form-control" type="date" required />
+                        <div class="invalid-feedback">Start date is required.</div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Project End Date</label>
-                        <input asp-for="Enddate" class="form-control" type="date" />
+                        <input asp-for="Enddate" class="form-control" type="date" required />
+                        <div class="invalid-feedback">End date is required.</div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Submit" />
-                        <input type="reset" value="Reset" />
+                        <input type="submit" class="btn btn-primary" value="Submit" />
+                        <input type="reset" class="btn btn-outline-primary" value="Reset" />
                     </div>
                 </form>
             </div>
@@ -62,20 +111,37 @@
 
     </div>
 </body>
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 @{
     if (TempData["msg"] != null)
     {
         if (TempData["msg"].ToString() == "Yes")
         {
-            <script>
-                $(document).ready(function () {
-                    $("#myAlert").show('slow', function () {
-                        $(".close").click(function () {
-                            $("#myAlert").alert("close");
-                        });
-                    });
-                });
-            </script>
+    <script>
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function () {
+            window.location.href = "../add";
+            modal.style.display = "none";
+        }
+    </script>
         }
         if (TempData["msg"].ToString() == "No")
         {
@@ -86,10 +152,9 @@
     }
     else
     {
-        <script>
-            $(document).ready(function () {
-                $("#myAlert").hide()
-            });
-        </script>
+<script>
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+</script>
     }
 }

@@ -61,12 +61,12 @@ namespace LoginPage.Controllers
                     HttpContext.Session.SetString("empid", emp.empid.ToString());
 
                 }
-                TempData["msg"] = "Yes";
+                TempData["msgl"] = "Yes";
                 con.Close();
-                return RedirectToAction("empop");
+                return View();
             }
             else
-                TempData["msg"] = "No";
+                TempData["msgl"] = "No";
             return View();
         }
         public IActionResult empop()
@@ -458,6 +458,12 @@ namespace LoginPage.Controllers
 
                 throw;
             }
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("empid");
+            return RedirectToAction("Index","Home");
         }
     }
 }

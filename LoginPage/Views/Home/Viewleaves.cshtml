@@ -2,7 +2,7 @@
     ViewData["Title"] = "Display Data";
     string[] TableHeaders = new string[] {
                     "Reference number",
-                    "Employee Id",
+                    "Employee Name",
                     "Start Date",
                     "End Date",
                     "Leave Type",
@@ -22,7 +22,6 @@
     </script>
 </head>
 <body>
-    <center><h1>All leaves</h1></center>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -51,6 +50,7 @@
             </div>
         </nav>
     </header>
+    <center><h1>All leaves</h1></center>
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
@@ -75,12 +75,12 @@
                         {
                             <tr>
                                 <td>@Data.id</td>
-                                <td>@Data.empid</td>
+                                <td>@Data.name</td>
                                 <td>@Data.Startdate</td>
                                 <td>@Data.Enddate</td>
                                 <td>@Data.Leavetype</td>
                                 <td>@Data.Reason</td>
-                                <td>@Html.ActionLink("Download", "Download", new { path=Data.Doc })</td>
+                                <td>@Html.ActionLink("Download", "Download", new { path = Data.Doc })</td>
                                 <td>@Data.Status</td>
                                 <td><button class="btn btn-outline-primary" onclick="view(@Data.id)">View</button></td>
                             </tr>

@@ -18,14 +18,16 @@
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <form class="form-horizontal" asp-action="Emplogin">
+            <form class="needs-validation" asp-action="Emplogin" novalidate>
                 <div class="form-group">
                     <label class="control-label">Employee Id</label>
                     <input asp-for="empid" class="form-control" type="number" required />
+                    <div class="invalid-feedback">Employee id is required.</div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Password</label>
                     <input asp-for="Upassword" class="form-control" type="password" required />
+                    <div class="invalid-feedback">Password is required.</div>
                 </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Login" />
@@ -43,17 +45,35 @@
         <div class="col-sm-4"></div>
     </div>
 </div>
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
 @{
 
-    if (TempData["msg"] != null)
+    if (TempData["msgl"] != null)
     {
-        if (TempData["msg"].ToString() == "Yes")
+        if (TempData["msgl"].ToString() == "Yes")
         {
             <script>
                 window.location.replace("empop")
             </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        if (TempData["msgl"].ToString() == "No")
         {
             <script>
                 $(document).ready(function () {
@@ -65,7 +85,6 @@
                 });
             </script>
         }
-        TempData["msg"] = null;
     }
     else
     {
@@ -75,4 +94,5 @@
             });
         </script>
     }
+    TempData["msgl"] = null;
 }

@@ -3,8 +3,7 @@
 @{
     ViewData["Title"] = "Leavedetails";
 }
-
-<h1>Leave Details</h1>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script lang="=javascript">
     function approve(p) {
         var c = document.getElementById("comment");
@@ -21,7 +20,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Management System</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,15 +28,14 @@
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="empop">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="add">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="#">Privacy</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                     <li class="nav-item ml-auto">
 
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
                     </li>
@@ -47,6 +45,7 @@
     </nav>
 </header>
 <div>
+    <h1>Leave Details</h1>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -56,10 +55,10 @@
             @Html.DisplayFor(model => model.id)
         </dd>
         <dt class="col-sm-2">
-            Employee Id
+            Employee Name
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.empid)
+            @Html.DisplayFor(model => model.name)
         </dd>
         <dt class="col-sm-2">
             Start Date
@@ -86,10 +85,10 @@
             @Html.DisplayFor(model => model.Reason)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Doc)
+            Document
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Doc)
+            @Html.ActionLink("Download", "Download", new { path = Model.Doc })
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
@@ -110,18 +109,25 @@
     @if (Convert.ToBoolean(Model.verify))
     {
         <form class="form-vertical" asp-action="Leaveaction">
-            <div class="form-group">
-                <label class="control-label">Reference Id</label>
-                <input type="text" asp-for="id" value="@Model.id" readonly />
+            <div class="form-group" id="ref">
+                <label class="control-label" id="id1">Reference Id</label>
+                <input type="text" asp-for="id" id="in1" value="@Model.id" readonly />
             </div>
             <div class="form-group">
                 <label class="control-label">Comments</label>
                 <input asp-for="comment" type="text" />
             </div>
             <div class="form-group">
-                <input class="btn btn-outline-success" name="approve" type="submit" value="Approve"/>
+                <input class="btn btn-outline-success" name="approve" type="submit" value="Approve" />
                 <input class="btn btn-outline-danger" name="reject" type="submit" value="Reject" />
             </div>
         </form>
     }
- </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#ref").hide()
+        $("#id1").hide()
+        $("in1").hide()
+    });
+</script>

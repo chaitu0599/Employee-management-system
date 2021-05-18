@@ -13,11 +13,10 @@
                     "Risk Solution" };
 }
 <body>
-    <center><h1>All tasks</h1></center>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Details</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Management System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,7 +30,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item ml-auto">
-                            
+
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
@@ -41,6 +40,8 @@
             </div>
         </nav>
     </header>
+    <center><h1>All tasks</h1></center>
+    <a href="/Home/Export">Export</a>
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
@@ -80,6 +81,5 @@
                 }
             </tbody>
         </table>
-        <a href="/Home/Export">Export</a>
     </div>
 </body>

@@ -24,7 +24,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -35,25 +35,28 @@
 
 <h4>Tasks</h4>
 <hr /></center>
-<div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" class="was-validated">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Taskname" class="control-label"></label>
                 <input asp-for="Taskname" class="form-control" required />
                 <span asp-validation-for="Taskname" class="text-danger"></span>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Task name is required.</div>
             </div>
             <div class="form-group">
                 <label asp-for="Startdate" class="control-label"></label>
                 <input asp-for="Startdate" class="form-control" type="date" required />
                 <span asp-validation-for="Startdate" class="text-danger"></span>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Start date is required.</div>
             </div>
             <div class="form-group">
                 <label asp-for="Enddate" class="control-label"></label>
                 <input asp-for="Enddate" class="form-control" type="date" required />
                 <span asp-validation-for="Enddate" class="text-danger"></span>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">End date is required.</div>
             </div>
 
             <div class="form-group">
@@ -73,11 +76,15 @@
                 <label asp-for="Summary" class="control-label"></label>
                 <input asp-for="Summary" class="form-control" required />
                 <span asp-validation-for="Summary" class="text-danger"></span>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Task summary is required.</div>
             </div>
             <div class="form-group">
                 <label asp-for="Taskdetails" class="control-label"></label>
                 <input asp-for="Taskdetails" class="form-control" required />
                 <span asp-validation-for="Taskdetails" class="text-danger"></span>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Task details are required.</div>
             </div>
             <div class="form-group">
                 <label for="Select1">Any issues/risks?</label>
@@ -86,15 +93,21 @@
                     <option value="Yes">Yes</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label id="rdl" asp-for="Riskdetails" class="control-label"></label>
-                <input id="rd" asp-for="Riskdetails" class="form-control" />
-                <span asp-validation-for="Riskdetails" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label id="rsl" asp-for="Risksolution" class="control-label"></label>
-                <input id="rs" asp-for="Risksolution" class="form-control" />
-                <span asp-validation-for="Risksolution" class="text-danger"></span>
+            <div id="opt">
+                <div class="form-group">
+                    <label id="rdl" asp-for="Riskdetails" class="control-label"></label>
+                    <input id="rd" asp-for="Riskdetails" class="form-control" />
+                    <span asp-validation-for="Riskdetails" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Risk details are is required.</div>
+                </div>
+                <div class="form-group">
+                    <label id="rsl" asp-for="Risksolution" class="control-label"></label>
+                    <input id="rs" asp-for="Risksolution" class="form-control" />
+                    <span asp-validation-for="Risksolution" class="text-danger"></span>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Risk solution is required.</div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -103,8 +116,6 @@
                 <a asp-action="Viewtask">Back to List</a>
             </div>
         </form>
-    </div>
-</div>
 
 <div>
     
@@ -114,6 +125,7 @@
 
     $("#Select1").change(function () {
         if ($(this).val() == "Yes") {
+            $('#opt').show();
             $('#rd').show();
             $('#rd').attr('required', '');
             $('#rd').attr('data-error', 'This field is required.');
@@ -124,6 +136,7 @@
             $('#rs').attr('data-error', 'This field is required.');
 
         } else {
+            $('#opt').hide();
             $('#rd').hide();
             $('#rd').removeAttr('required');
             $('#rd').removeAttr('data-error');

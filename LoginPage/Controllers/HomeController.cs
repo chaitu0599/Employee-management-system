@@ -22,8 +22,10 @@ namespace LoginPage.Controllers
         db dbop = new db();
         empdb emdb = new empdb();
         SqlCommand com = new SqlCommand();
-        SqlDataReader dr;
+        SqlCommand com1 = new SqlCommand();
+        SqlDataReader dr,dr1;
         SqlConnection con = new SqlConnection();
+        SqlConnection con1 = new SqlConnection();
         employee emp = new employee();
         List<employee> employees = new List<employee>();
         List<Tasks> tasks = new List<Tasks>();
@@ -38,6 +40,7 @@ namespace LoginPage.Controllers
         {
             _logger = logger;
             con.ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True";
+            con1.ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True";
             _webHostEnvironment = env;
         }
 
@@ -172,7 +175,7 @@ namespace LoginPage.Controllers
                     ,
                         name = dr["name"].ToString()
                     ,
-                        dob = dr["dob"].ToString()
+                        dob = Convert.ToDateTime(dr["dob"].ToString())
                     ,
                         father = dr["father"].ToString()
                     ,
@@ -216,7 +219,7 @@ namespace LoginPage.Controllers
                     ,
                         name = dr["name"].ToString()
                     ,
-                        dob = dr["dob"].ToString()
+                        dob = Convert.ToDateTime(dr["dob"].ToString())
                     ,
                         father = dr["father"].ToString()
                     ,
@@ -340,11 +343,21 @@ namespace LoginPage.Controllers
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
+                    con1.Open();
+                    com1.Connection = con1;
+                    var parameter2 = com1.CreateParameter();
+                    parameter2.Value = Int32.Parse(dr["empid"].ToString());
+                    parameter2.ParameterName = "@xyz";
+                    com1.Parameters.Add(parameter2);
+                    com1.CommandText = "SELECT [name] from [Login].[dbo].[employees] WHERE id=@xyz";
+                    dr1 = com1.ExecuteReader();
+                    com1.Parameters.Clear();
+                    while (dr1.Read())
                     fl.Add(new Fetchleaves()
                     {
                         id = Int32.Parse(dr["id"].ToString())
                     ,
-                        empid = Int32.Parse(dr["empid"].ToString())
+                        name = dr1["name"].ToString()
                     ,
                         Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
                     ,
@@ -360,6 +373,7 @@ namespace LoginPage.Controllers
                     ,
                         comment = dr["comments"].ToString()
                     });
+                    con1.Close();
                 }
                 con.Close();
             }
@@ -385,11 +399,22 @@ namespace LoginPage.Controllers
                 dr = com.ExecuteReader();
                 while (dr.Read())
                 {
+                    con1.Open();
+                    com1.Connection = con1;
+                    com1.Parameters.Clear();
+                    var parameter1 = com1.CreateParameter();
+                    parameter1.Value = Int32.Parse(dr["empid"].ToString());
+                    parameter1.ParameterName = "@mln";
+                    com1.Parameters.Add(parameter1);
+                    com1.CommandText = "SELECT [name] from employees WHERE id=@mln";
+                    dr1 = com1.ExecuteReader();
+                    com1.Parameters.Clear();
+                    while (dr1.Read())
                     l = new Fetchleaves()
                     {
                         id = Int32.Parse(dr["id"].ToString())
                     ,
-                        empid = Int32.Parse(dr["empid"].ToString())
+                        name = dr1["name"].ToString()
                     ,
                         Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
                     ,
@@ -407,7 +432,7 @@ namespace LoginPage.Controllers
                     ,
                         comment = dr["comments"].ToString()
                     };
-
+                    con1.Close();
                 }
             }
             catch (Exception)
