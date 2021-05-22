@@ -6,6 +6,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using LoginPage.Models;
+using System.Security.Cryptography;
+
 namespace LoginPage.Models
 {
     public class db
@@ -31,20 +33,54 @@ namespace LoginPage.Models
         }
         public int LoginCheck(Emp_login emp)
         {
-            SqlCommand com = new SqlCommand("SP_elogin", con);
-            com.CommandType = CommandType.StoredProcedure;
-            com.Parameters.AddWithValue("@Upassword", emp.Upassword);
-            com.Parameters.AddWithValue("@Empid", emp.empid);
-            SqlParameter oblogin = new SqlParameter();
-            oblogin.ParameterName = "@Isvalid";
-            oblogin.SqlDbType = SqlDbType.Bit;
-            oblogin.Direction = ParameterDirection.Output;
-            com.Parameters.Add(oblogin);
-            con.Open();
-            com.ExecuteNonQuery();
-            int res = Convert.ToInt32(oblogin.Value);
-            con.Close();
+            SqlDataReader dr;
+            SqlConnection con1 = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=Login;Integrated Security=True");
+            SqlCommand co1 = new SqlCommand();
+            co1.Connection = con1;
+            con1.Open();
+            var parameter = co1.CreateParameter();
+            parameter.Value = emp.empid;
+            parameter.ParameterName = "@id";
+            co1.Parameters.Add(parameter);
+            co1.CommandText = "SELECT Password from Emp_login WHERE empid=@id";
+            dr = co1.ExecuteReader();
+            string pwd;
+            int res=0;
+            while (dr.Read()) {
+                pwd = dr["Password"].ToString();
+                if (IsValid(emp.Upassword, pwd))
+                    res = 1;
+                else
+                    res = 0;
+              }
             return res;
+        }
+        public bool IsValid(string testPassword, string origDelimHash)
+        {
+            var origHashedParts = origDelimHash.Split('|');
+            var origSalt = Convert.FromBase64String(origHashedParts[0]);
+            var origIterations = Int32.Parse(origHashedParts[1]);
+            var origHash = origHashedParts[2];
+
+            //generate hash from test password and original salt and iterations
+            var pbkdf2 = new Rfc2898DeriveBytes(testPassword, origSalt, origIterations);
+            byte[] testHash = pbkdf2.GetBytes(24);
+
+            //if hash values match then return success
+            if (Convert.ToBase64String(testHash) == origHash)
+                return true;
+
+            //no match return false
+            return false;
+
+        }
+        public string Generate(string password, int iterations = 1000)
+        {
+            var salt = new byte[24];
+            new RNGCryptoServiceProvider().GetBytes(salt);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations);
+            byte[] hash = pbkdf2.GetBytes(24);
+            return Convert.ToBase64String(salt) + "|" + iterations + "|" + Convert.ToBase64String(hash);
         }
         public int RegisterCheck(Newemp n)
         {
@@ -78,7 +114,8 @@ namespace LoginPage.Models
                 SqlCommand com1 = new SqlCommand("SP_emplogin", con);
                 com1.CommandType = CommandType.StoredProcedure;
                 com1.Parameters.AddWithValue("@Empid", n.id);
-                com1.Parameters.AddWithValue("@Password", n.Password);
+                string x = Generate(n.Password);
+                com1.Parameters.AddWithValue("@Password",x);
                 con.Open();
                 com1.ExecuteNonQuery();
                 con.Close();

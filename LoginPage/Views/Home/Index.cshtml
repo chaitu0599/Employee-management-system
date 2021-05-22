@@ -1,16 +1,23 @@
-﻿<script type="text/javascript">
-    function ad() {
-        location.href = "Home/Adlogin";
-    }
-    function emp() {
-        location.href = "Employee/Emplogin";
-    }
-</script>
+﻿<head>
+    <style>
+    body { background-image: url("images/index.jpg"); }
+    </style>
+    <script type="text/javascript">
+        function ad() {
+            location.href = "Home/Adlogin";
+        }
+        function emp() {
+            location.href = "Employee/Emplogin";
+        }
+    </script>
+</head>
 <div class="container">
-    <center><h1>Welcome!</h1><br></center><br>
-    <center>
-        Login as:
-        <button style="width:110px;" type="button" class="btn btn-info" onclick="ad()"><span style="text-overflow:ellipsis;">Admin</span></button>
-        <button style="width:110px;"type="button" class="btn btn-info" onclick="emp()"><span style="text-overflow:ellipsis;">Employee</span></button>
-    </center>
+    <center><div class="page-header"><h1 style="color:white;">Welcome!</h1></div><br></center><br>
+    <div class="row p-4">
+        <div class="col-md-4"><h4 style="color:white; float:right">Login as:</h4></div>
+        <div class="col-md-8">
+            <button style="width:210px;" type="button" class="btn btn-info" onclick="ad()"><span style="text-overflow:ellipsis;">Admin</span></button>
+            <button style="width:210px;" type="button" class="btn btn-info" onclick="emp()"><span style="text-overflow:ellipsis;">Employee</span></button>
+         </div>
+    </div>
 </div>

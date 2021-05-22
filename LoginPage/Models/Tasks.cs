@@ -10,8 +10,8 @@ namespace LoginPage.Models
         public string id { get; set; }
         public string Empid { get; set; }
         public string Taskname { get; set; }
-        public string Startdate { get; set; }
-        public string Enddate { get; set; }
+        public DateTime Startdate { get; set; }
+        public DateTime Enddate { get; set; }
         public string Duration { get; set; }
         public string Teamname { get; set; }
         public string Summary { get; set; }

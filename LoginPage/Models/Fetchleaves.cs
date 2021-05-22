@@ -17,7 +17,6 @@ namespace LoginPage.Models
         public string Doc { get; set; }
         public string Status { get; set; }
         public int verify { get; set; }
-        public string answer { get; set; }
         public string comment { get; set; }
     }
 }

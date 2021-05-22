@@ -7,6 +7,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            background-image: url(../../images/bg.jpg);
+        }
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
@@ -78,9 +81,7 @@
         </nav>
     </header>
     <div class="container">
-        <center>
-            <h1>Edit employee</h1>
-        </center>
+        <center><h1 style="font-family:'Baskerville Old Face';">Edit Employee Details</h1></center>
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -185,9 +186,9 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 @{
-    if (TempData["msg"] != null)
+    if (TempData["msgemp"] != null)
     {
-        if (TempData["msg"].ToString() == "Yes")
+        if (TempData["msgemp"].ToString() == "Yes")
         {
             <script>
                 var modal = document.getElementById("myModal");
@@ -199,7 +200,7 @@
                 }
             </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        if (TempData["msgemp"].ToString() == "No")
         {
             <script>
                 alert("Record updation failed")
@@ -213,4 +214,5 @@
     modal.style.display = "none";
 </script>
     }
+    TempData["msgemp"] = null;
 }

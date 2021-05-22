@@ -3,6 +3,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            background-image: url(../../images/watercolor3.jpg);
+        }
         /* The Modal (background) */
         .modal {
             display: none; /* Hidden by default */
@@ -73,17 +76,18 @@
             </div>
         </nav>
     </header>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Team has been added.</p>
+        </div>
+    </div>
     <div class="container">
-        <center><h1>Enter Team Details</h1></center>
+        <center><h1 style="font-family:'Baskerville Old Face';">Enter New Team Details</h1></center>
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <p>Team has been added.</p>
-                    </div>
-                </div>
+
                 <form class="needs-validation" asp-action="TeamAdd" novalidate>
                     <div class="form-group">
                         <label class="control-label">Name</label>
@@ -129,21 +133,21 @@
     })();
 </script>
 @{
-    if (TempData["msg"] != null)
+    if (TempData["msgt"] != null)
     {
-        if (TempData["msg"].ToString() == "Yes")
+        if (TempData["msgt"].ToString() == "Yes")
         {
     <script>
         var modal = document.getElementById("myModal");
         var span = document.getElementsByClassName("close")[0];
         modal.style.display = "block";
         span.onclick = function () {
-            window.location.href = "../add";
+            window.location.href = "add";
             modal.style.display = "none";
         }
     </script>
         }
-        if (TempData["msg"].ToString() == "No")
+        if (TempData["msgt"].ToString() == "No")
         {
             <script>
                 alert("Team addition failed")

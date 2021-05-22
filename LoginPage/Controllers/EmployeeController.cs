@@ -63,7 +63,7 @@ namespace LoginPage.Controllers
                 }
                 TempData["msgl"] = "Yes";
                 con.Close();
-                return View();
+                return RedirectToAction("empop");
             }
             else
                 TempData["msgl"] = "No";
@@ -109,9 +109,9 @@ namespace LoginPage.Controllers
         {
             int x = dbop.taskadd(ta, id);
             if (x == 1)
-                TempData["msg"] = "Yes";
+                TempData["msged"] = "Yes";
             else
-                TempData["msg"] = "No";
+                TempData["msged"] = "No";
             return RedirectToAction("Viewtask");
         }
         public IActionResult Createtask()
@@ -146,11 +146,11 @@ namespace LoginPage.Controllers
             int x = dbop.taskadd(ta, HttpContext.Session.GetString("empid"));
             if (x == 1)
             {
-                TempData["msg"] = "Yes";
+                TempData["msgcr"] = "Yes";
             }
             else
             {
-                TempData["msg"] = "No";
+                TempData["msgcr"] = "No";
             }
             return RedirectToAction("Viewtask");
         }
@@ -173,9 +173,9 @@ namespace LoginPage.Controllers
             }
             int x = dbop.leaveapp(la, folder, HttpContext.Session.GetString("empid"));
             if (x == 1)
-                TempData["msgl"] = "Yes";
+                TempData["msglea"] = "Yes";
             else
-                TempData["msgl"] = "No";
+                TempData["msglea"] = "No";
             return View();
         }
         public IActionResult Viewtask()
@@ -230,9 +230,9 @@ namespace LoginPage.Controllers
                     ,
                         Taskname = dr["Taskname"].ToString()
                     ,
-                        Startdate = dr["Startdate"].ToString()
+                        Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
                     ,
-                        Enddate = dr["Enddate"].ToString()
+                        Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
                     ,
                         Duration = dr["Taskduration"].ToString()
                     ,
@@ -292,9 +292,9 @@ namespace LoginPage.Controllers
                     ,
                         Taskname = dr["Taskname"].ToString()
                     ,
-                        Startdate = dr["Startdate"].ToString()
+                        Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
                     ,
-                        Enddate = dr["Enddate"].ToString()
+                        Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
                     ,
                         Duration = dr["Taskduration"].ToString()
                     ,

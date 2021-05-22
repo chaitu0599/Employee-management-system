@@ -1,18 +1,54 @@
 ﻿@model LoginPage.Models.Newemp
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-image: url(../../images/bg1.jpg);
+        }
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            font-size: large;
+        }
+
+        /* The Close Button */
+        .close1 {
+            color: #aaaaaa;
+            float: right;
+            font-size: 30px;
+            font-weight: bold;
+            padding-left: 300px;
+        }
+
+            .close1:hover,
+            .close1:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
 <script>
-    $(document).ready(function () {
-        $("#myAlert1").hide()
-    });
-        $(document).ready(function () {
-            $("#myAlert").hide()
-        });
-            $(document).ready(function () {
-            $("#myAlert3").hide()
-        });
-            $(document).ready(function () {
-            $("#myAlert2").hide()
-        });
+    
     function validate(ev) {
         ev.preventDefault;
         var pwd1 = document.getElementById("pwd1").value;
@@ -34,11 +70,11 @@
 
 </script>
 <div class="container">
-    <center><h1>New Employee Registration</h1></center>
+    <center><h1 style="font-family:'Baskerville Old Face';">Employee Registration</h1></center>
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <form class="needs-validation" asp-action="newe" onsubmit="return validate(this)"novalidate>
+            <form class="needs-validation" asp-action="newe" onsubmit="return validate(this)" novalidate>
                 <div class="form-group">
                     <label class="control-label">Employee ID</label>
                     <input asp-for="id" class="form-control" type="number" required>
@@ -54,25 +90,27 @@
                     <input class="form-control" id="pwd2" type="password" required />
                     <div class="invalid-feedback">Please retype the password.</div>
                 </div>
+                <div class="alert alert-danger alert-dismissible fade show" style="display:none;" id="myAlert2">
+                    <button type="button" class="close">&times;</button>
+                    Employee already exists, please login.
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" style="display:none;" id="myAlert3">
+                    <button type="button" class="close">&times;</button>
+                    Employee does not exist. Contact your admin.
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" style="display:none;" id="myAlert1">
+                    <button type="button" class="close">&times;</button>
+                    Passwords do not match.
+                </div>
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Register" />
-                    <input class="btn btn-primary" type="reset" value="Reset" />
+                    <input class="btn btn-outline-primary ml-4" type="reset" value="Reset" />
                 </div>
-                <div class="alert alert-danger alert-dismissible fade show" id="myAlert1">
-                    <button type="button" class="close">&times;</button>
-                    <strong>Error!</strong> Passwords do not match.
-                </div>
-                <div class="alert alert-success alert-dismissible fade show" id="myAlert">
-                    <button type="button" class="close">&times;</button>
-                    <strong>Success!</strong> Registration done, please relogin.
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" id="myAlert2">
-                    <button type="button" class="close">&times;</button>
-                    <strong>Error!</strong> Employee already exists, please login.
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" id="myAlert3">
-                    <button type="button" class="close">&times;</button>
-                    <strong>Error!</strong> Employee does not exist. Contact your admin.
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close1">&times;</span>
+                        <p>Registration done. Please login.</p>
+                    </div>
                 </div>
                 <a href="Emplogin">Back to Login</a>
             </form>
@@ -104,14 +142,13 @@
         if (TempData["msg1"].ToString() == "Yes")
         {
             <script>
-                $(document).ready(function () {
-                    $("#myAlert").show('slow', function () {
-                        $(".close").click(function () {
-                            $("#myAlert").alert("close");
-                            window.location.replace("Emplogin");
-                        });
-                    });
-                });
+                var modal = document.getElementById("myModal");
+                var span = document.getElementsByClassName("close1")[0];
+                modal.style.display = "block";
+                span.onclick = function () {
+                    window.location.href = "Emplogin";
+                    modal.style.display = "none";
+                }
             </script>
         }
         if (TempData["msg1"].ToString() == "No")
@@ -126,9 +163,9 @@
                 });
             </script>
         }
-        if(TempData["msg1"].ToString() == "Nor")
-                {
-            <script >
+        if (TempData["msg1"].ToString() == "Nor")
+        {
+            <script>
                 $(document).ready(function () {
                     $("#myAlert2").show('slow', function () {
                         $(".close").click(function () {
@@ -137,6 +174,13 @@
                     });
                 });
             </script>
-                }
+        }
+    }
+    else
+    {
+        <script>
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        </script>
     }
 }

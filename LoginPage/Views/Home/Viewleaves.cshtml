@@ -8,10 +8,16 @@
                     "Leave Type",
                     "Reason",
                     "Document",
-                    "Status"
+                    "Status",
+                    "Comments"
                     };
 }
-<head >
+<head>
+    <style>
+        body {
+            background-image: url(../../images/watercolor3.jpg);
+        }
+    </style>
     <script lang="javascript">
         function view(p) {
             location.href = "Leavedetails/" + p;
@@ -25,7 +31,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Details</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="add">Employee Management System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,7 +56,14 @@
             </div>
         </nav>
     </header>
-    <center><h1>All leaves</h1></center>
+    <div class="row">
+        <div class="col-md-6">
+            <h1 style="font-family:'Baskerville Old Face'; float:right;">All Leaves</h1>
+        </div>
+        <div class="col-md-6">
+            <input class="form-control" style="width:50%; float:right;" id="myInput" type="text" placeholder="Search..">
+        </div>
+    </div>
     <div class="table">
         <table class="table table-bordered table-hover">
             <thead>
@@ -67,7 +80,7 @@
                     }
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable">
                 @{
                     if (Model != null)
                     {
@@ -82,6 +95,7 @@
                                 <td>@Data.Reason</td>
                                 <td>@Html.ActionLink("Download", "Download", new { path = Data.Doc })</td>
                                 <td>@Data.Status</td>
+                                <td>@Data.comment</td>
                                 <td><button class="btn btn-outline-primary" onclick="view(@Data.id)">View</button></td>
                             </tr>
                         }
@@ -91,3 +105,14 @@
         </table>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

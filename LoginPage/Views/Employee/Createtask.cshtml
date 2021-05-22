@@ -1,9 +1,15 @@
 ﻿@model LoginPage.Models.Taskadd
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+    body {
+        background-image: url(../../images/bg1.jpg);
+    }
+</style>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Management System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,79 +35,88 @@
         </nav>
     </header>
     <div class="container">
-        <center><h1>Enter Task Details</h1></center>
-                <form class="was-validated" asp-action="Createtask">
-                    <div class="form-group">
-                        <label class="control-label">Task Name</label>
-                        <input asp-for="Taskname" class="form-control" type="text" required />
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Task name is required.</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Start Date</label>
-                        <input asp-for="Startdate" class="form-control" type="date" required/>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Start date is required.</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">End Date</label>
-                        <input asp-for="Enddate" class="form-control" type="date" required />
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">End date is required.</div>
-                    </div>
+        <center><h1 style="font-family:'Baskerville Old Face';">Enter Task Details</h1></center>
+        <form class="needs-validation" asp-action="Createtask" novalidate>
+            <div class="form-group">
+                <label class="control-label">Task Name</label>
+                <input asp-for="Taskname" class="form-control" type="text" required />
+                <div class="invalid-feedback">Task name is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Start Date</label>
+                <input asp-for="Startdate" class="form-control" type="date" required />
+                <div class="invalid-feedback">Start date is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">End Date</label>
+                <input asp-for="Enddate" class="form-control" type="date" required />
+                <div class="invalid-feedback">End date is required.</div>
+            </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Team Name</label>
-                        @{ List<string> names = TempData["MyList"] as List<string>; }
-                            <select asp-for="Teamname" class="form-control">
-                                @{ 
-                                foreach(string name in names)
-                                {
-                                <option value="@name">@name</option>
-                                }
-                                }
+            <div class="form-group">
+                <label class="control-label">Team Name</label>
+                @{ List<string> names = TempData["MyList"] as List<string>; }
+                <select asp-for="Teamname" class="form-control">
+                    @{
+                        foreach (string name in names)
+                        {
+                            <option value="@name">@name</option>
+                        }
+                    }
 
-                            </select>
-                        </div>
-                    <div class="form-group">
-                        <label class="control-label">Task Summary</label>
-                        <input asp-for="Summary" class="form-control" type="text" required/>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Task summary is required.</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Task Details</label>
-                        <input asp-for="Taskdetails" class="form-control" type="text" required/>
-                        <div class="valid-feedback">Valid.</div>
-                        <div class="invalid-feedback">Task details are required.</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Select1">Any issues/risks?</label>
-                        <select class="form-control" id="Select1">
-                            <option value="No" selected>No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
-                    </div>
-                    <div id="opt">
-                        <div class="form-group">
-                            <label for="rd" class="control-label" id="rdl">Risk/issue details</label>
-                            <input id="rd" class="form-control" asp-for="Riskdetails" type="text" />
-                            <div class="valid-feedback">Valid.</div>
-                            <div class="invalid-feedback">Risk details are required.</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="rs" class="control-label" id="rsl">Risk Solution</label>
-                            <textarea id="rs" asp-for="Risksolution"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <input class="btn btn-info" type="submit" value="Submit" />
-                            <input class="btn btn-outline-secondary" type="reset" value="Reset" />
-                        </div>
-                    </div>
-                </form>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Task Summary</label>
+                <input asp-for="Summary" class="form-control" type="text" required />
+                <div class="invalid-feedback">Task summary is required.</div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Task Details</label>
+                <input asp-for="Taskdetails" class="form-control" type="text" required />
+                <div class="invalid-feedback">Task details are required.</div>
+            </div>
+            <div class="form-group">
+                <label for="Select1">Any issues/risks?</label>
+                <select class="form-control" id="Select1">
+                    <option value="No" selected>No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div id="opt">
+                <div class="form-group">
+                    <label for="rd" class="control-label" id="rdl">Risk/issue details</label>
+                    <input id="rd" class="form-control" asp-for="Riskdetails" type="text" />
+                    <div class="invalid-feedback">Risk details are required.</div>
+                </div>
+                <div class="form-group">
+                    <label for="rs" class="control-label" id="rsl">Risk Solution</label>
+                    <input id="rs" asp-for="Risksolution" type="text" />
+                    <div class="invalid-feedback">Risk details are required.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-info" type="submit" value="Submit" />
+                <input class="btn btn-outline-secondary" type="reset" value="Reset" />
+            </div>
+        </form>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
 
         $("#Select1").change(function () {
             if ($(this).val() == "Yes") {

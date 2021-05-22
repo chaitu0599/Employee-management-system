@@ -63,6 +63,7 @@ namespace LoginPage.Controllers
                 string xi = HttpContext.Session.GetString("username");
                 TempData["user"] = xi;
                 TempData["msg"] = "Yes";
+                return RedirectToAction("add");
             }
             else
             {
@@ -103,9 +104,9 @@ namespace LoginPage.Controllers
         {
             int x = dbop.teamadd(ta);
             if (x == 1)
-                TempData["msg"] = "Yes";
+                TempData["msgt"] = "Yes";
             else
-                TempData["msg"] = "No";
+                TempData["msgt"] = "No";
             return View();
         }
         public IActionResult ExporttoExcel()
@@ -134,10 +135,10 @@ namespace LoginPage.Controllers
             int x = emdb.Emp(em, id);
             if (x == 1)
             {
-                TempData["msg"] = "Yes";
+                TempData["msgemp"] = "Yes";
             }
             else
-                TempData["msg"] = "No";
+                TempData["msgemp"] = "No";
             return View();
         }
         public IActionResult Delete(int id)
@@ -151,6 +152,17 @@ namespace LoginPage.Controllers
             com.CommandText = "UPDATE employees SET isactive='0' WHERE id=@id";
             com.ExecuteNonQuery();
             con.Close();
+            com.Parameters.Clear();
+            con.Open();
+            com.Connection = con;
+            var p = com.CreateParameter();
+            p.Value = id;
+            p.ParameterName = "@id";
+            com.Parameters.Add(p);
+            com.CommandText = "UPDATE Emp_login SET isverify='0' WHERE empid=@id";
+            com.ExecuteNonQuery();
+            con.Close();
+            com.Parameters.Clear();
             return RedirectToAction("viewr");
         }
         private void FetchData(int id)
@@ -253,10 +265,10 @@ namespace LoginPage.Controllers
             int x = emdb.Emp(em);
             if (x == 1)
             {
-                TempData["msg"] = "Yes";
+                TempData["msgf"] = "Yes";
             }
             else
-                TempData["msg"] = "No";
+                TempData["msgf"] = "No";
             return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -302,9 +314,9 @@ namespace LoginPage.Controllers
                     ,
                         Taskname = dr["Taskname"].ToString()
                     ,
-                        Startdate = dr["Startdate"].ToString()
+                        Startdate = Convert.ToDateTime(dr["Startdate"].ToString())
                     ,
-                        Enddate = dr["Enddate"].ToString()
+                        Enddate = Convert.ToDateTime(dr["Enddate"].ToString())
                     ,
                         Duration = dr["Taskduration"].ToString()
                     ,

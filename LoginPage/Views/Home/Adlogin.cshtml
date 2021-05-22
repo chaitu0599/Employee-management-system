@@ -3,7 +3,11 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
-    
+    <style>
+        body{
+            background-image:url(../../images/adlogin.jpg);
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
@@ -13,28 +17,28 @@
 </head>
 <body>
     <div class="container">
-        <center><h1>Admin Login</h1></center>
-        <div class="row">
+        <div class="page-header"><center><h1 style="color:white;">Admin Login</h1></center></div>
+        <div class="row pt-5">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <form class="needs-validation" asp-action="Adlogin" novalidate>
                     <div class="form-group">
-                        <label class="control-label">Username</label>
+                        <label class="control-label" style="color:white;">Username</label>
                         <input asp-for="Username" class="form-control" type="text" required />
                         <div class="invalid-feedback">Username is required.</div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Password</label>
+                        <label class="control-label" style="color:white;">Password</label>
                         <input asp-for="Upassword" class="form-control" type="password" required />
                         <div class="invalid-feedback">Password is required.</div>
                     </div>
+                    <div class="alert alert-danger alert-dismissible fade show" style="display:none;" id="myAlert">
+                        <button type="button" class="close">&times;</button>
+                        The credentials entered are wrong.
+                    </div>
                     <div class="form-group">
                         <input class="btn btn-primary" id="myBtn" type="submit" value="Login" />
-                        <input class="btn btn-outline-primary" type="reset" value="Reset" />
-                    </div>
-                    <div class="alert alert-danger alert-dismissible fade show" id="myAlert">
-                        <button type="button" class="close">&times;</button>
-                        <strong>Login failed!</strong> The credentials entered are wrong.
+                        <input class="btn btn-outline-primary ml-4" type="reset" value="Reset" />
                     </div>
                 </form>
             </div>
@@ -62,13 +66,7 @@
 @{
 
     if (TempData["msg"] != null)
-    {
-        if (TempData["msg"].ToString() == "Yes")
-        {
-            <script>
-                window.location.replace("add")
-            </script>
-        }
+    { 
         @if (TempData["msg"].ToString() == "No")
         {
             <script>
@@ -91,5 +89,4 @@
         });
     </script>
     }
-    TempData["msg"] = null; 
 }

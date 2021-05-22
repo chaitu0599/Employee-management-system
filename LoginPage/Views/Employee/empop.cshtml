@@ -7,10 +7,15 @@
         location.href = "Leavespage";
     }
 </script>
+<style>
+    body {
+        background-image: url(../../images/bg-11-full.jpg);
+    }
+</style>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Home Page</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="empop">Employee Management System</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,9 +41,12 @@
     </nav>
 </header>
 <div class="container">
-    <center><h1>Welcome! @Model.Username</h1><br><h2>Select the operation you want to perform</h2></center><br>
-    <center>
-        <button type="button" class="btn btn-primary" onclick="viewr()">View Tasks</button>
-        <button type="button" class="btn btn-info" onclick="leave()">My Leaves</button>
-    </center>
+    <center><h1>Hello! @Model.Username</h1><br><h2>Select the operation you want to perform</h2></center><br>
+    <div class="row p-4">
+        <div class="col-md-4"><h4 style="float:right">Your operations:</h4></div>
+        <div class="col-md-8">
+            <button style="width:230px;" type="button" class="btn btn-primary" onclick="viewr()"><span style="text-overflow:ellipsis;">My Tasks</span></button>
+            <button style="width:230px;" type="button" class="btn btn-primary" onclick="leave()"><span style="text-overflow:ellipsis;">My Leaves</span></button>
+         </div>
+    </div>
 </div>

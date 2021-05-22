@@ -3,6 +3,12 @@
     ViewData["Title"] = "Home Page";
 }
 <head>
+    <style>
+        body {
+            background-image: url(../../images/background.jpg);
+            background-repeat:no-repeat;
+        }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         function preventBack() { window.history.forward(); }
@@ -14,37 +20,38 @@
     </script>
 </head>
 <div class="container">
-    <center><h1>Employee Login</h1></center>
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form class="needs-validation" asp-action="Emplogin" novalidate>
-                <div class="form-group">
-                    <label class="control-label">Employee Id</label>
-                    <input asp-for="empid" class="form-control" type="number" required />
-                    <div class="invalid-feedback">Employee id is required.</div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Password</label>
-                    <input asp-for="Upassword" class="form-control" type="password" required />
-                    <div class="invalid-feedback">Password is required.</div>
-                </div>
-                <div class="form-group">
-                    <input class="btn btn-primary" type="submit" value="Login" />
-                    <input class="btn btn-primary" type="reset" value="Reset" />
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-secondary" onclick="newe()">New Employee</button>
-                </div>
-            </form>
-            <div class="alert alert-danger alert-dismissible fade show" id="myAlert">
-                <button type="button" class="close">&times;</button>
-                <strong>Login failed!</strong> The credentials entered are wrong.
+    <div class="page-header">
+        <center><h1 style="color:white;">Employee Login</h1></center></div>
+        <div class="row pt-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form class="needs-validation" asp-action="Emplogin" novalidate>
+                    <div class="form-group">
+                        <label class="control-label" style="color:white;">Employee Id</label>
+                        <input asp-for="empid" class="form-control" type="number" required />
+                        <div class="invalid-feedback">Employee id is required.</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" style="color:white;">Password</label>
+                        <input asp-for="Upassword" class="form-control" type="password" required />
+                        <div class="invalid-feedback">Password is required.</div>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show" style="display:none;" id="myAlert">
+                        <button type="button" class="close">&times;</button>
+                        The credentials entered are wrong.
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info" type="submit" value="Login" />
+                        <input class="btn btn-outline-info ml-4" type="reset" value="Reset" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary" onclick="newe()">Register</button>
+                    </div>
+                </form>
             </div>
+            <div class="col-sm-4"></div>
         </div>
-        <div class="col-sm-4"></div>
     </div>
-</div>
 <script>
     (function () {
         'use strict';
@@ -67,12 +74,6 @@
 
     if (TempData["msgl"] != null)
     {
-        if (TempData["msgl"].ToString() == "Yes")
-        {
-            <script>
-                window.location.replace("empop")
-            </script>
-        }
         if (TempData["msgl"].ToString() == "No")
         {
             <script>
